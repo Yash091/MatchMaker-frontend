@@ -1,0 +1,62 @@
+.sign-up-container{
+    display : flex;
+    flex-direction: row;
+    /* flex-wrap: wrap; */
+    column-gap : 2em;
+}
+
+.register-intro{
+    width : 40%;
+    background : #0070FF;
+    height : 100vh;
+}
+
+.register-intro{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register-fields{
+    width: 60%;
+}
+
+.logo-name{
+    display : flex;
+    flex-direction: row;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+    column-gap: 2rem;
+}
+
+.logo{
+    width: 3rem;
+    height : 4rem;
+    padding-top: 5%;
+}
+
+.heading{
+    color : white;
+    font-size : 2rem;
+    padding-top: 5%;
+}
+
+.tag-line{
+    color : white;
+    display: flex;
+    justify-content : center;
+}
+
+.couple-img{
+    width : 60%;
+    height : 45%;
+}
+
+.reg-heading{
+    font-size : 2rem;
+}
+
+.reg-tagline{
+    font-size: 1rem;
+}
+

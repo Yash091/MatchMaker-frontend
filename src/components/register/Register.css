@@ -1,0 +1,80 @@
+.reg-container {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+  background: linear-gradient(
+      rgba(12, 92, 112, 0.5) 0%,
+      rgba(24, 183, 189, 0.5) 50%
+    ),
+    url("./bg.jpg") no-repeat;
+
+  background-size: 100% 100%;
+  height: 100%;
+  width: 100%;
+}
+
+.imgfile {
+  display: none;
+}
+.reg-cont1 {
+  overflow-x: auto;
+  font-size: 2rem;
+  text-align: center;
+}
+.reg-img img {
+  width: 17rem;
+  height: 100%;
+  object-fit: cover;
+}
+.reg-addimg i,
+label {
+  cursor: pointer;
+  margin: 2%;
+  font-size: 1.4rem;
+}
+.reg-form {
+  margin-top: 8%;
+}
+.reg-container table {
+  font-size: 1.4rem;
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  overflow-wrap: break-word;
+}
+.reg-container table input {
+  font-size: 1.4rem;
+  height: 2.1rem;
+  border-style: dashed;
+  background-color: #bde0e7;
+}
+.reg-container table textarea {
+  font-size: 1.4rem;
+
+  border-style: dashed;
+  background-color: #bde0e7;
+}
+.reg-container table input[type="checkbox"] {
+  width: 2rem;
+  height: 1.4rem;
+  margin: 4%;
+}
+.reg-container button {
+  height: 2.8rem;
+  width: 14rem;
+  font-size: 1.6rem;
+  background-color: rgb(24, 183, 189);
+  border-color: rgb(24, 183, 189);
+  color: white;
+  float: right;
+  margin-bottom: 2%;
+  cursor: pointer;
+}
+.reg-container button:hover {
+  background-color: #95dae7;
+  color: rgb(24, 183, 189);
+}
+.reg-cont2 {
+  overflow-wrap: normal;
+  overflow-x: auto;
+}
