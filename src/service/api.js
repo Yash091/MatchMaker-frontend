@@ -27,14 +27,23 @@ export const logUser = async (user) => {
 
 export const getUser = async () => {
   try {
-    // console.log("APi");
+    
     const data = await axios.get(`${url}/getuser`, { withCredentials: true });
+   
     return data;
   } catch (error) {
     return error;
   }
 };
-
+export const getAllUser = async () => {
+  try {
+    // console.log("APi");
+    const data = await axios.get(`${url}/getalluser`, { withCredentials: true });
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
 export const editUser = async ( user) => {
   try {
     let res = await axios.post(`${url}/editprofile`, user);
@@ -54,3 +63,12 @@ export const deleteUser = async () => {
     return error;
   }
 };
+
+export const getDetail=async(id)=>{
+  try {
+    const data = await axios.get(`${url}/getdetail/${id}`);
+    return data;
+  } catch (error) {
+    return error;
+  }
+}

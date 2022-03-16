@@ -1,46 +1,41 @@
-import React from "react";
+import React from 'react'
 import { useState, useEffect } from "react";
-import { getUser } from "../../service/api";
-import { useHistory } from "react-router-dom";
-import "./Profile.css";
-import { deleteUser } from "../../service/api";
-import Update from "./Update";
-import {Link} from "react-router-dom"
-import Navbar from "../navbar/Navbar";
+import { useParams ,useHistory} from 'react-router';
+import { getDetail } from '../../service/api';
 
-const initial = {
-  name: "",
-  email: "",
-  mobile: "",
-  dob: "",
-  gender: "",
-  address: "",
-  religion: "",
-  mothertongue: "",
-  description: "",
-  picture: "",
-};
+function DetailView() {
+  const initial = {
+      name: "",
+      email: "",
+      mobile: "",
+      dob: "",
+      gender: "",
+      address: "",
+      religion: "",
+      mothertongue: "",
+      description: "",
+      picture: "",
+    };
 
-const Profile = () => {
+  const {id} = useParams();
+
   const [user, setUser] = useState(initial);
   const history = useHistory();
+
   useEffect(() => {
-    const getData = async () => {
-      const data = await getUser();
-      if (!data.data._id) history.push("/");
+    const getData = async (id) => {
+      // console.log(id);
+      const data = await getDetail(id);
+    //   if (!data.data._id) history.push("/");
       setUser(data.data);
     };
-    getData();
+    getData(id);
   }, []);
-  
-  const handleDelete = async () => {
-    const data = await deleteUser();
-    history.push("/register");
-  };
 
   return (
-    <section style={{ backgroundColor: "#eee" }}>
-      <Navbar/>
+    <div>
+        <section style={{ backgroundColor: "#eee" }}>
+      
       <div className="container py-5">
         <div className="row">
           <div className="col">
@@ -76,7 +71,7 @@ const Profile = () => {
                 <h5 className="my-3">{user.name}</h5>
                 {/* <p className="text-muted mb-1">Full Stack Developer</p>
                 <p className="text-muted mb-4">Bay Area, San Francisco, CA</p> */}
-                <div className="d-flex justify-content-center mb-2">
+                {/* <div className="d-flex justify-content-center mb-2">
                   <Link to={`/update/${user._id}`}>
                     <button type="button" className="btn btn-primary">
                     Edit Profile
@@ -89,7 +84,7 @@ const Profile = () => {
                   >
                     Delete Profile
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="card mb-4 mb-lg-0">
@@ -220,7 +215,8 @@ const Profile = () => {
         </div>
       </div>
     </section>
-  );
-};
+    </div>
+  )
+}
 
-export default Profile;
+export default DetailView

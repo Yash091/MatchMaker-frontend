@@ -3,8 +3,10 @@ import {useParams,useHistory} from "react-router"
 import { getUser ,editUser , uploadFile} from "../../service/api";
 
 function Update() {
+
   const {id} = useParams();
   const history = useHistory();
+
   const initial = {
     name: "",
     email: "",
@@ -22,11 +24,13 @@ function Update() {
   const handleChange=(e)=>{
     setUser({...user,[e.target.name]:e.target.value});
   }
+
   useEffect(() => {
     const getData = async () => {
+      // console.log("before calling");
       const data = await getUser();
-      setUser(data.data);
-
+      // console.log(data);
+      setUser(data.data); 
     }
     getData();
   }, []);
@@ -49,7 +53,6 @@ function Update() {
     getImage();
   }, [file]);
   
-
   //user updated
   const saveChanges = async (e) => {
     e.preventDefault();

@@ -1,24 +1,61 @@
 .sign-up-container{
     display : flex;
     flex-direction: row;
-    /* flex-wrap: wrap; */
-    column-gap : 2em;
+    column-gap: 1rem;
 }
 
 .register-intro{
     width : 40%;
+    height: 100vh;
     background : #0070FF;
-    height : 100vh;
-}
-
-.register-intro{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+
 }
 
 .register-fields{
     width: 60%;
+    height: 100vh;
+    margin-top : 2%;
+    justify-content : center;
+    align-items: center;
+}
+
+.register-fields table{
+    font-size: 1rem;
+    border-collapse: separate;
+    border-spacing: 0 0.2rem;
+    overflow-wrap: break-word;
+}
+
+.register-fields table input, textarea {
+	width: 13rem;
+	height: 3rem;
+	padding: 0;
+	margin: 0;
+	vertical-align: bottom;
+	position: relative;
+	*overflow: hidden;
+}
+
+.register-fields table label {
+	display: block;
+	padding-left: 15px;
+	text-indent: -15px;
+    font-size : 1.2rem;
+    width: 100%;
+    max-width : 100%;
+}
+
+
+.form-and-img{
+    display : flex;
+    flex-direction: row;
+    column-gap : 2rem;
+    justify-content: center;  
+    /* flex-wrap: wrap; */
 }
 
 .logo-name{
@@ -48,15 +85,37 @@
 }
 
 .couple-img{
-    width : 60%;
-    height : 45%;
+    width: 25rem;
+    height: 20rem;
 }
 
 .reg-heading{
-    font-size : 2rem;
+    font-size : 1.7rem;
+    align-items: center;
 }
 
-.reg-tagline{
-    font-size: 1rem;
+
+.create-acc{
+    width : 12rem;
+    height : 3rem;
+    color : white;
+    background-color: #0070FF;
 }
 
+.img-uplaod{
+    display : flex;
+    flex-direction: column;
+    align-items: center;
+    width : fit-content;
+    height: fit-content;
+} 
+
+.img-uplaod img{
+    width: 30%;
+    height : 15%;
+}
+
+.img-uplaod label{
+    display: block;
+    width: 12rem;
+}
