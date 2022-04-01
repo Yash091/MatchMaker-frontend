@@ -1,7 +1,7 @@
 import "./App.css";
-
+import { useEffect,useState } from "react";
 import { Route } from "react-router-dom";
-
+import { io } from "socket.io-client";
 import Register from "./components/register/Register";
 import Login from "./components/login/Login";
 import Profile from "./components/profile/Profile";
@@ -12,12 +12,22 @@ import AllUsers from "./components/users/AllUsers";
 import DetailView from "./components/detail/DetailView";
 
 function App() {
+
+  const [socket , setSocket] = useState(null);
+
+  useEffect(() => {  
+    setSocket(io("http://localhost:5000"));
+  },[]);
+
+  useEffect(() => {
+    socket?.emit("newuser","new user found");
+  },[socket])
   
   return (
     <>
       <Route exact path="/">
         <Navbar/>
-        <AllUsers/>
+        <AllUsers socket = {socket}/>
       </Route>
       <Route exact path="/userprofile">
         <Profile />

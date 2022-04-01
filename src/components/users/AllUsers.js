@@ -4,9 +4,11 @@ import { getAllUser } from '../../service/api'
 import { Link } from 'react-router-dom';
 import "./AllUsers.css"
 
-const AllUsers = () => {
-
+const AllUsers = (props) => {
+    
     const [users , setUsers] = useState([]);
+    // const [name,setName] = useState("");
+    
     useEffect(() => {
       const allUsers = async () => {
         const data = await getAllUser();
@@ -20,27 +22,28 @@ const AllUsers = () => {
         let ca = document.cookie.split(';');
         for (let i = 0; i < ca.length; i++) {
             let c = ca[i];
-            while (c.charAt(0) == ' ') {
+            while (c.charAt(0) === ' ') {
                 c = c.substring(1);
             }
-            if (c.indexOf(name) == 0) {
+            if (c.indexOf(name) === 0) {
                 return c.substring(name.length, c.length);
             }
         }
         return "";
     }
     const s = getCookie("jwtoken");
-    console.log(s);
-
+    // console.log(s);
+    let data = users.find((elem) => elem.tokens[0].token === s);
+    
     return (
         <div className="all-user-card-container">
             {
                 users.filter(elem => {
-                    console.log(elem.tokens);
                     return elem.tokens[0].token!==s;
                 }).map( (elem) => {
                     return(
-                        <UserCard elem={elem}/>
+                        
+                        <UserCard elem={elem} socket={props.socket} user={data}/>
                     )
                 })
             }    
