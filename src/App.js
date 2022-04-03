@@ -16,12 +16,17 @@ function App() {
   const [socket , setSocket] = useState(null);
 
   useEffect(() => {  
-    setSocket(io("http://localhost:5000"));
-  },[]);
+    if(socket === null)
+    {
+      
+      setSocket(io("http://localhost:5000"));
+    }
+    if(socket) {
+      socket.sendBuffer = [];
+      socket.volatile.emit("newuser","new user found");  
+    }
+  },[socket]);
 
-  useEffect(() => {
-    socket?.emit("newuser","new user found");
-  },[socket])
   
   return (
     <>

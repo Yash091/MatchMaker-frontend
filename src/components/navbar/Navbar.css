@@ -55,15 +55,15 @@ ul {
   padding-left: 1rem;
 }
 .home-span {
-  color: #ff477e;
+  color: #0070FF;
 }
 
 a .login-span {
-  background-color: #ff477e;
+  background: #0070FF;
   color: #ffffff;
   width: 6rem;
   height: 2.4rem;
-  filter: drop-shadow(0px 19px 16px rgba(255, 71, 126, 0.5));
+  filter: drop-shadow(0px 10px 9px rgba(71, 151, 255, 0.5));
   text-align: center;
   padding-top: 0.5rem;
   border-radius: 8px;
@@ -108,11 +108,11 @@ a .login-span {
     font-size: 1.5rem;
   }
   a .login-span {
-    background-color: #ff477e;
+    background-color: #0070FF;;
     color: #ffffff;
     width: 6rem;
     height: 2.4rem;
-    filter: drop-shadow(0px 19px 16px rgba(255, 71, 126, 0.5));
+    filter: drop-shadow(0px 10px 9px rgba(78, 117, 215, 0.5));
     text-align: center;
     padding-top: 0rem;
     border-radius: 8px;

@@ -46,7 +46,7 @@ export const getAllUser = async () => {
 };
 export const editUser = async ( user) => {
   try {
-    let res = await axios.post(`${url}/editprofile`, user);
+    const res = await axios.post(`${url}/editprofile`, user);
     return res;
   } catch (err) {
     console.log("Error while calling editPost API", err);
@@ -67,6 +67,15 @@ export const deleteUser = async () => {
 export const getDetail=async(id)=>{
   try {
     const data = await axios.get(`${url}/getdetail/${id}`);
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const updateLike = async(obj) => {
+  try {
+    const data = await axios.post(`${url}/updatelike`,obj,{withCredentials: true,});
     return data;
   } catch (error) {
     return error;
