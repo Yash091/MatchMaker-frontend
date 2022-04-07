@@ -14,7 +14,7 @@ const UserCard = ({elem}) => {
         const editLike = async(obj)=>{
             try {
                 const data = await updateLike(obj);
-                console.log(data);
+                // console.log(data);
                 window.localStorage.setItem("userInfo" , JSON.stringify(data.data));
             } catch (error) {
                 console.log("It's an error!")
@@ -28,7 +28,7 @@ const UserCard = ({elem}) => {
         const editDislike = async(obj)=>{
             try {
                 const data = await updateDislike(obj);
-                console.log(data);
+                // console.log(data);
                 window.localStorage.setItem("userInfo" , JSON.stringify(data.data));
             } catch (error) {
                 console.log("It's an error!")

@@ -5,7 +5,7 @@ import couple from "./couple.png"
 import blank from "./blank.png"
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { createUser, uploadFile } from "../../service/api";
+import { createUser, uploadFile } from "../../../service/api";
 
 function Signup() {
   const initial = {

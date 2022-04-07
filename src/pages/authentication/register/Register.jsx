@@ -2,7 +2,8 @@ import "./Register.css";
 import blank from "./blank.png";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { createUser, uploadFile } from "../../service/api";
+
+import { createUser , uploadFile } from "../../../service/api";
 
 const initial = {
   name: "",

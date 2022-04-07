@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { logUser } from "../../service/api";
+import { logUser } from "../../../service/api"
 import "./Login.css";
 
 const Login = () => {
@@ -11,7 +11,7 @@ const Login = () => {
     e.preventDefault();
     const obj = { email: email, password: password };
     const data = await logUser(obj);
-    // console.log(data);
+    
     if (data.status === 200) {
       window.localStorage.setItem("userInfo", JSON.stringify(data.data.user));
       history.push("/");

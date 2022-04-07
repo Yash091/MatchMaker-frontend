@@ -6,7 +6,6 @@ import "./Profile.css";
 import { deleteUser } from "../../service/api";
 import Update from "./Update";
 import {Link} from "react-router-dom"
-import Navbar from "../navbar/Navbar";
 import { UserContext } from "../../context/Context";
 
 const initial = {
@@ -27,14 +26,7 @@ const Profile = () => {
   const {user,setUser} = useContext(UserContext);
   const history = useHistory();
 
-  useEffect(() => {
-  
-    console.log(user);
-    // if(user === {} || !user || user === undefined || user === null) {
-    //   history.push("/");
-    // }
-    
-  }, [history,user]);
+
   
   const handleDelete = async () => {
     const data = await deleteUser();
