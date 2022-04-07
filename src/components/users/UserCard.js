@@ -1,17 +1,21 @@
-import {React , useEffect,useContext , useState} from 'react'
+import {React , useEffect , useContext , useState} from 'react'
 import { Link } from 'react-router-dom'
 import "./UserCard.css"
-import { updateLike } from '../../service/api'
+import { updateLike , updateDislike } from '../../service/api'
+import { UserContext } from '../../context/Context'
 
-const UserCard = ({elem , socket , user}) => {
+const UserCard = ({elem}) => {
 
     const [like , setLike] = useState(false);
-    
+    const {user , setUser} = useContext(UserContext);
+
     const handleLike = () => {
         // socket.volatile.emit("liked",user._id,elem._id)
         const editLike = async(obj)=>{
             try {
                 const data = await updateLike(obj);
+                console.log(data);
+                window.localStorage.setItem("userInfo" , JSON.stringify(data.data));
             } catch (error) {
                 console.log("It's an error!")
             }
@@ -19,10 +23,26 @@ const UserCard = ({elem , socket , user}) => {
         editLike({"likedby":user._id , "liked":elem._id});
     }
     
-    useEffect(()=>{
-        socket.on("getnotification",({sender,receiver})=>{
-        })
-    },[socket])
+    const handleDislike = () => {
+        // socket.volatile.emit("liked",user._id,elem._id)
+        const editDislike = async(obj)=>{
+            try {
+                const data = await updateDislike(obj);
+                console.log(data);
+                window.localStorage.setItem("userInfo" , JSON.stringify(data.data));
+            } catch (error) {
+                console.log("It's an error!")
+            }
+        }
+        editDislike({"dislikedby":user._id , "disliked":elem._id});
+    }
+
+
+    
+    // useEffect(()=>{
+    //     socket.on("getnotification",({sender,receiver})=>{
+    //     })
+    // },[socket])
   
     return (
         
@@ -35,9 +55,9 @@ const UserCard = ({elem , socket , user}) => {
                 <div className = 'name'
                 style={{display: "inline-block"}}>
                     {elem.name}
-                <div className={`init-heart ${like === false ? "" : "hidden"}`} onClick={()=>setLike(!like)}><i className="fa fa-heart-o"></i></div>
+                <div className={`init-heart ${like === false ? "" : "hidden"}`} ><i className="fa fa-heart-o" onClick={()=>{setLike(!like); handleLike()}}></i></div>
                    
-                <div className={`heart ${like === false ? "hidden" : ""}`} onClick={()=>{setLike(!like); handleLike()}}><i className="fa fa-solid fa-heart"></i></div>
+                <div className={`heart ${like === false ? "hidden" : ""}`} ><i className="fa fa-solid fa-heart" onClick={()=>{setLike(!like); handleDislike()}}></i></div>
                 </div>
                 <div className='proff'>{elem.profession}</div>
             </div>

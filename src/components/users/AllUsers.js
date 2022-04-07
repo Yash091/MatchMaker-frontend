@@ -60,7 +60,7 @@ const AllUsers = (props) => {
                 }).map( (elem) => {
                     return(
                         
-                        <UserCard elem={elem} socket={props.socket} user={data}/>
+                        <UserCard elem={elem}/>
                     )
                 })
             }    

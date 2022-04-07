@@ -11,29 +11,31 @@ import Navbar from "./components/navbar/Navbar";
 import AllUsers from "./components/users/AllUsers";
 import DetailView from "./components/detail/DetailView";
 import LikeCard from "./components/likecard/LikeCard";
+import LikeCards from "./pages/likecards/LikeCards";
+import LikedByCards from "./pages/likecards/LikedByCards";
 
 function App() {
 
-  const [socket , setSocket] = useState(null);
+  // const [socket , setSocket] = useState(null);
 
-  useEffect(() => {  
-    if(socket === null)
-    {
+  // useEffect(() => {  
+  //   if(socket === null)
+  //   {
       
-      setSocket(io("http://localhost:8000"));
-    }
-    if(socket) {
-      socket.sendBuffer = [];
-      socket.volatile.emit("newuser","new user found");  
-    }
-  },[socket]);
+  //     setSocket(io("http://localhost:8000"));
+  //   }
+  //   if(socket) {
+  //     socket.sendBuffer = [];
+  //     socket.volatile.emit("newuser","new user found");  
+  //   }
+  // },[socket]);
 
   
   return (
     <>
+     <Navbar/>
       <Route exact path="/">
-        <Navbar/>
-        <AllUsers socket = {socket}/>
+        <AllUsers />
       </Route>
       <Route exact path="/userprofile">
         <Profile />
@@ -54,7 +56,10 @@ function App() {
         <Register />
       </Route>
       <Route path="/like">
-        <LikeCard/>
+        <LikeCards/>
+      </Route>
+      <Route path="/likedby">
+        <LikedByCards/>
       </Route>
     </>
   );

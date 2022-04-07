@@ -44,7 +44,7 @@ const Profile = () => {
 
   return (
     <section style={{ backgroundColor: "#eee" }}>
-      <Navbar/>
+      
       <div className="container py-5">
         <div className="row">
           <div className="col">

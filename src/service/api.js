@@ -81,3 +81,12 @@ export const updateLike = async(obj) => {
     return error;
   }
 }
+
+export const updateDislike = async(obj) => {
+  try {
+    const data = await axios.post(`${url}/updatedislike` , obj , {withCredentials: true,});
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
