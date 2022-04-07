@@ -10,6 +10,7 @@ import Update from "./components/profile/Update";
 import Navbar from "./components/navbar/Navbar";
 import AllUsers from "./components/users/AllUsers";
 import DetailView from "./components/detail/DetailView";
+import LikeCard from "./components/likecard/LikeCard";
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
     if(socket === null)
     {
       
-      setSocket(io("http://localhost:5000"));
+      setSocket(io("http://localhost:8000"));
     }
     if(socket) {
       socket.sendBuffer = [];
@@ -51,6 +52,9 @@ function App() {
       </Route>
       <Route path="/register">
         <Register />
+      </Route>
+      <Route path="/like">
+        <LikeCard/>
       </Route>
     </>
   );

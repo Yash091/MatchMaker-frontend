@@ -3,16 +3,20 @@ import UserCard from './UserCard'
 import { getAllUser } from '../../service/api'
 import { Link } from 'react-router-dom';
 import "./AllUsers.css"
+import { Spinner } from '@chakra-ui/react'
 
 const AllUsers = (props) => {
     
     const [users , setUsers] = useState([]);
     // const [name,setName] = useState("");
+    const [isloading , setIsLoading] = useState(true);
     
     useEffect(() => {
+        setIsLoading(true);
       const allUsers = async () => {
         const data = await getAllUser();
         setUsers(data.data);
+        setIsLoading(false);
       }
       allUsers();
     }, [])
@@ -36,9 +40,22 @@ const AllUsers = (props) => {
     let data = users.find((elem) => elem.tokens[0].token === s);
     
     return (
+        <>
+
         <div className="all-user-card-container">
             {
-                users.filter(elem => {
+                isloading === true ? 
+                <div className="spinner" style={{display: "flex" , gap: "5rem" , flexDirection: "column" , justifyContent: "center" , alignItems: "center"}}>
+                    <h1 style={{fontSize: "5rem" , color: "#ff477e"}}>Wait for your partners</h1>
+                    <Spinner 
+                        thickness = '4px'
+                        speed = '0.65s'
+                        emptyColor = 'gray.200'
+                        color = '#ff477e'
+                        size = 'xl'
+                    />
+                </div>  
+                    : users.filter(elem => {
                     return elem.tokens[0].token!==s;
                 }).map( (elem) => {
                     return(
@@ -48,6 +65,7 @@ const AllUsers = (props) => {
                 })
             }    
         </div>
+        </>
     )
 }
 

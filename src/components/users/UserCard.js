@@ -1,4 +1,4 @@
-import {React , useEffect , useState} from 'react'
+import {React , useEffect,useContext , useState} from 'react'
 import { Link } from 'react-router-dom'
 import "./UserCard.css"
 import { updateLike } from '../../service/api'
@@ -6,12 +6,9 @@ import { updateLike } from '../../service/api'
 const UserCard = ({elem , socket , user}) => {
 
     const [like , setLike] = useState(false);
-
-    const handleLike = () => {
-        socket.volatile.emit("liked",user._id,elem._id)
-    }
     
-    useEffect(()=>{
+    const handleLike = () => {
+        // socket.volatile.emit("liked",user._id,elem._id)
         const editLike = async(obj)=>{
             try {
                 const data = await updateLike(obj);
@@ -19,8 +16,11 @@ const UserCard = ({elem , socket , user}) => {
                 console.log("It's an error!")
             }
         }
+        editLike({"likedby":user._id , "liked":elem._id});
+    }
+    
+    useEffect(()=>{
         socket.on("getnotification",({sender,receiver})=>{
-            editLike({"likedby":sender , "liked":receiver});
         })
     },[socket])
   
@@ -35,9 +35,9 @@ const UserCard = ({elem , socket , user}) => {
                 <div className = 'name'
                 style={{display: "inline-block"}}>
                     {elem.name}
-                <div className={`init-heart ${like === false ? "" : "hidden"}`} onClick={()=>setLike(!like)}><i class="fa fa-heart-o"></i></div>
+                <div className={`init-heart ${like === false ? "" : "hidden"}`} onClick={()=>setLike(!like)}><i className="fa fa-heart-o"></i></div>
                    
-                <div className={`heart ${like === false ? "hidden" : ""}`} onClick={()=>{setLike(!like); handleLike()}}><i class="fa fa-solid fa-heart"></i></div>
+                <div className={`heart ${like === false ? "hidden" : ""}`} onClick={()=>{setLike(!like); handleLike()}}><i className="fa fa-solid fa-heart"></i></div>
                 </div>
                 <div className='proff'>{elem.profession}</div>
             </div>

@@ -11,7 +11,11 @@ const Login = () => {
     e.preventDefault();
     const obj = { email: email, password: password };
     const data = await logUser(obj);
-    if (data.status === 200) history.push("/");
+    // console.log(data);
+    if (data.status === 200) {
+      window.localStorage.setItem("userInfo", JSON.stringify(data.data.user));
+      history.push("/");
+    }
     else window.alert("Invalid Credentials!");
   };
 

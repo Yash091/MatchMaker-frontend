@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { getUser } from "../../service/api";
 import { useHistory } from "react-router-dom";
@@ -7,6 +7,7 @@ import { deleteUser } from "../../service/api";
 import Update from "./Update";
 import {Link} from "react-router-dom"
 import Navbar from "../navbar/Navbar";
+import { UserContext } from "../../context/Context";
 
 const initial = {
   name: "",
@@ -22,19 +23,22 @@ const initial = {
 };
 
 const Profile = () => {
-  const [user, setUser] = useState(initial);
+
+  const {user,setUser} = useContext(UserContext);
   const history = useHistory();
+
   useEffect(() => {
-    const getData = async () => {
-      const data = await getUser();
-      if (!data.data._id) history.push("/");
-      setUser(data.data);
-    };
-    getData();
-  }, []);
+  
+    console.log(user);
+    // if(user === {} || !user || user === undefined || user === null) {
+    //   history.push("/");
+    // }
+    
+  }, [history,user]);
   
   const handleDelete = async () => {
     const data = await deleteUser();
+    window.localStorage.clear();
     history.push("/register");
   };
 

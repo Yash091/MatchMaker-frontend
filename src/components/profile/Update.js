@@ -1,5 +1,6 @@
-import {React , useEffect, useState} from "react";
+import {React , useEffect, useState,useContext} from "react";
 import {useParams,useHistory} from "react-router"
+import { UserContext } from "../../context/Context";
 import { getUser ,editUser , uploadFile} from "../../service/api";
 
 function Update() {
@@ -20,19 +21,16 @@ function Update() {
     picture: "",
   };
 
-  const [user , setUser] = useState(initial);
+  const {user,setUser} = useContext(UserContext);
+  
   const handleChange=(e)=>{
     setUser({...user,[e.target.name]:e.target.value});
   }
 
   useEffect(() => {
-    const getData = async () => {
-      // console.log("before calling");
-      const data = await getUser();
-      // console.log(data);
-      setUser(data.data); 
-    }
-    getData();
+    
+    if(!user || user === undefined)
+      history.push("/");
   }, []);
 
   //upload image
@@ -56,8 +54,9 @@ function Update() {
   //user updated
   const saveChanges = async (e) => {
     e.preventDefault();
-
+    
     const data = await editUser(user);
+    window.localStorage.setItem("userInfo" , JSON.stringify(data.data.updatedUser));
     history.push("/");
   };
 
