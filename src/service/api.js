@@ -35,10 +35,10 @@ export const getUser = async () => {
     return error;
   }
 };
-export const getAllUser = async () => {
+export const getAllUser = async (id) => {
   try {
     // console.log("APi");
-    const data = await axios.get(`${url}/getalluser`, { withCredentials: true });
+    const data = await axios.get(`${url}/getalluser/${id}`, { withCredentials: true });
     return data;
   } catch (error) {
     return error;

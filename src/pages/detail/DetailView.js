@@ -1,8 +1,8 @@
 import React from 'react'
-import { useState, useEffect , useContext } from "react";
+import { useState, useEffect  } from "react";
 import { useParams ,useHistory} from 'react-router';
 import { getDetail } from '../../service/api';
-import { UserContext } from '../../context/Context';
+
 import { updateLike , updateDislike } from '../../service/api';
 
 function DetailView() {
@@ -23,7 +23,8 @@ function DetailView() {
   const {id} = useParams();
 
   const [like, setLike] = useState(false);
-  const {user , setUser} = useContext(UserContext);
+  // const {user , setUser} = useContext(UserContext);
+    const [user,setUser] = useState();
   const [userdata, setUserdata] = useState(initial);
   const history = useHistory();
 
@@ -35,6 +36,7 @@ function DetailView() {
       setUserdata(data.data);
     };
     getData(id);
+    setUser(JSON.parse(window.localStorage.getItem("userInfo")));
   }, []);
 
   const handleLike = () => {

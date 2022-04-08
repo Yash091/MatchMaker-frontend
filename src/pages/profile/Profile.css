@@ -3,3 +3,17 @@
   object-fit: cover;
   border-radius: 50%;
 } */
+.profile-container .pic-text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-container .detail-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 1rem;
+  
+}

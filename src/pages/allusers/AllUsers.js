@@ -1,25 +1,29 @@
-import {React , useState , useEffect, useContext} from 'react'
+import {React , useState , useEffect} from 'react'
 import UserCard from '../../components/users/UserCard'
 import { getAllUser } from '../../service/api'
 import { Link } from 'react-router-dom';
 import "./AllUsers.css"
 import { Spinner } from '@chakra-ui/react'
-import { UserContext } from '../../context/Context';
 
-const AllUsers = (props) => {
-    
-    const [users , setUsers] = useState([]);
-    // const [name,setName] = useState("");
+// import { useLocation } from 'react-router-dom';
+
+const AllUsers = ({socket}) => {
+
     const [isloading , setIsLoading] = useState(true);
-    const {user} = useContext(UserContext);
+    const [users , setUsers] = useState([]);
+    // const {user} = useContext(UserContext);
+
     useEffect(() => {
         setIsLoading(true);
-      const allUsers = async () => {
-        const data = await getAllUser();
-        setUsers(data.data);
-        setIsLoading(false);
-      }
-      allUsers();
+        
+        const allUsers = async () => {
+            const peep = JSON.parse(window.localStorage.getItem('userInfo'));
+            // console.log(peep);
+            const data = await getAllUser(peep?._id);
+            setUsers(data.data);
+            setIsLoading(false);
+        }
+        allUsers();
     }, [])
     
     // function getCookie(cname) {
@@ -46,7 +50,7 @@ const AllUsers = (props) => {
         <div className="all-user-card-container">
             {
                 isloading === true ? 
-                <div className="spinner" style={{display: "flex" , gap: "5rem" , flexDirection: "column" , justifyContent: "center" , alignItems: "center"}}>
+                (<div className="spinner" style={{display: "flex" , gap: "5rem" , flexDirection: "column" , justifyContent: "center" , alignItems: "center"}}>
                     <h1 style={{fontSize: "5rem" , color: "#ff477e"}}>Wait for your partners</h1>
                     <Spinner 
                         thickness = '4px'
@@ -55,13 +59,11 @@ const AllUsers = (props) => {
                         color = '#ff477e'
                         size = 'xl'
                     />
-                </div>  
-                    : users.filter(elem => {
-                    return elem._id!==user._id;
-                }).map( (elem) => {
-                    return(
-                        
-                        <UserCard elem={elem}/>
+                </div>)  
+                    :
+                    users?.map( (elem) => {
+                    return( 
+                        <UserCard elem={elem} socket={socket}/>
                     )
                 })
             }    

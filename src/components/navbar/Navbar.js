@@ -45,11 +45,11 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/services">
+                <Link to="/matches">
                   <span
                     className="services"
                   >
-                    Services
+                    Matches
                   </span>
                 </Link>
               </li>
@@ -79,7 +79,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="#">
+                <Link to="/login">
                   <p className="login-span">
                     Login
                   </p>

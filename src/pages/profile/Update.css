@@ -1,0 +1,18 @@
+.update-container .pic-text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.update-container .detail-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 0.9rem;
+  overflow-y: scroll;
+}
+
+.update-container .detail-body input{
+    width: 100%;
+}

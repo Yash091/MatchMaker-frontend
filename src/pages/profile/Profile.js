@@ -6,7 +6,11 @@ import "./Profile.css";
 import { deleteUser } from "../../service/api";
 import Update from "./Update";
 import {Link} from "react-router-dom"
-import { UserContext } from "../../context/Context";
+// import { UserContext } from "../../context/Context";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { useColorModeValue } from "@chakra-ui/react";
+import MatchesCard from "../../components/matches-card/MatchesCard";
+import Matches from "../matches/Matches";
 
 const initial = {
   name: "",
@@ -23,21 +27,36 @@ const initial = {
 
 const Profile = () => {
 
-  const {user,setUser} = useContext(UserContext);
+  // const {user} = useContext(UserContext);
   const history = useHistory();
-
-
+  const [liked,setLiked] = useState([]);
+  const [likedby,setLikedby] = useState([]);
+  const [user,setUser] = useState(initial);
+  useEffect(()=>{
+      const like = JSON.parse(window.localStorage.getItem("userInfo"));
+      setLiked(like.liked);
+      setLikedby(like.likedby);
+      setUser(like);
+  },[])
   
   const handleDelete = async () => {
     const data = await deleteUser();
     window.localStorage.clear();
     history.push("/register");
   };
-
+  
+  const colors = useColorModeValue(
+    ['red.50', 'teal.50'],
+    ['red.900', 'teal.900'],
+  );
+  
+  const [tabIndex, setTabIndex] = React.useState(0)
+  const bg = colors[tabIndex];
+  
   return (
-    <section style={{ backgroundColor: "#eee" }}>
+    <section style={{ backgroundColor: "#eee" }} className="profile-container">
       
-      <div className="container py-5">
+      <div className="container py-3">
         <div className="row">
           <div className="col">
             {/* <nav
@@ -62,7 +81,7 @@ const Profile = () => {
         <div className="row">
           <div className="col-lg-4">
             <div className="card mb-4">
-              <div className="card-body text-center">
+              <div className="card-body text-center pic-text">
                 <img
                   src={user.picture}
                   alt="avatar"
@@ -88,48 +107,28 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            <div className="card mb-4 mb-lg-0">
-              <div className="card-body p-0">
-                <ul className="list-group list-group-flush rounded-3">
-                  <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                    <i className="fas fa-globe fa-lg text-warning"></i>
-                    <p className="mb-0">https://mdbootstrap.com</p>
-                  </li>
-                  <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                    <i
-                      className="fab fa-github fa-lg"
-                      style={{ color: "#333333" }}
-                    ></i>
-                    <p className="mb-0">mdbootstrap</p>
-                  </li>
-                  <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                    <i
-                      className="fab fa-twitter fa-lg"
-                      style={{ color: "#55acee" }}
-                    ></i>
-                    <p className="mb-0">@mdbootstrap</p>
-                  </li>
-                  <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                    <i
-                      className="fab fa-instagram fa-lg"
-                      style={{ color: "#ac2bac" }}
-                    ></i>
-                    <p className="mb-0">mdbootstrap</p>
-                  </li>
-                  <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                    <i
-                      className="fab fa-facebook-f fa-lg"
-                      style={{ color: "#3b5998" }}
-                    ></i>
-                    <p className="mb-0">mdbootstrap</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <Tabs onChange={(index) => setTabIndex(index)} bg={bg}>
+              <TabList>
+                <Tab>People you liked</Tab>
+                <Tab>People who liked you</Tab>
+              </TabList>
+              <TabPanels p='2rem'>
+                <TabPanel>
+                  {!liked[0] ? "You have not liked anyone" : <MatchesCard elem={user.liked[0]}/>}
+                  {liked[1] ? <MatchesCard elem={user.liked[1]}/> : ""}
+                  {liked[2] ? <Link to="/like"> View More </Link> : ""}
+                </TabPanel>
+                <TabPanel>
+                  {!likedby[0] ? "You have not been likedby anyone" : <MatchesCard elem={user.likedby[0]}/>}
+                  {likedby[1] ? <MatchesCard elem={user.likedby[1]}/> : ""}
+                  {likedby[2] ? <Link to="/like"> View More </Link> : ""}
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
           </div>
           <div className="col-lg-8">
             <div className="card mb-4">
-              <div className="card-body">
+              <div className="card-body detail-body">
                 <div className="row">
                   <div className="col-sm-3">
                     <p className="mb-0">Full Name</p>

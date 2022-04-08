@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { logUser } from "../../../service/api"
 import "./Login.css";
 
-const Login = () => {
+const Login = ({socket}) => {
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const history = useHistory();
@@ -14,6 +14,7 @@ const Login = () => {
     
     if (data.status === 200) {
       window.localStorage.setItem("userInfo", JSON.stringify(data.data.user));
+      socket?.emit("setup",{sender: data.data.user});
       history.push("/");
     }
     else window.alert("Invalid Credentials!");
