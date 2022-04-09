@@ -1,19 +1,21 @@
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { logUser } from "../../../service/api"
 import "./Login.css";
-
+import { UserContext } from "../../../context/Context";
 const Login = ({socket}) => {
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
+  const {setUserData} = useContext(UserContext);
   const history = useHistory();
   const userLog = async (e) => {
     e.preventDefault();
     const obj = { email: email, password: password };
     const data = await logUser(obj);
-    console.log(data.data.user);
+    // console.log(data.data.user);
     if (data.status === 200) {
       window.localStorage.setItem("userInfo", JSON.stringify(data.data.user));
+      setUserData(data.data.user);
       socket?.emit("setup",{sender: data.data.user});
       history.push("/");
     }

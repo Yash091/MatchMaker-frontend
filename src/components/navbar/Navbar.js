@@ -1,16 +1,17 @@
 import { React } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import { Icon, createIcon } from '@chakra-ui/react'
 
 const Navbar = () => {
 
-  const verticalNav = (e) => {
-    console.log(e.target);
-    const nav = document.querySelector(".nav-links-horizontal");
-    nav.classList.toggle("responsive");
-    const temp = document.querySelector("#nav-link2");
-    temp.classList.toggle("open");
-  };
+  // const verticalNav = (e) => {
+  //   console.log(e.target);
+  //   const nav = document.querySelector(".nav-links-horizontal");
+  //   nav.classList.toggle("responsive");
+  //   const temp = document.querySelector("#nav-link2");
+  //   temp.classList.toggle("open");
+  // };
 
   return (
     <div>
@@ -21,9 +22,9 @@ const Navbar = () => {
           </div> */}
             <div
               className="icon"
-              onClick={(e) => {
-                verticalNav(e);
-              }}
+              // onClick={(e) => {
+              //   verticalNav(e);
+              // }}
             >
               <i
                 className="fa fa-bars"

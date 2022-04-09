@@ -1,17 +1,18 @@
-import {React , useEffect , useState} from 'react'
+import {React , useEffect , useState,useContext} from 'react'
 import { Link } from 'react-router-dom'
 import "./UserCard.css"
 import { updateLike , updateDislike, getUser } from '../../service/api'
 import { useToast } from '@chakra-ui/react'
 import sound from "./drop-sound.mp3";
-
+import { UserContext } from '../../context/Context'
 const UserCard = ({elem , socket}) => {
     const toast = useToast();
     const [like , setLike] = useState(false);
     const [temp,setTemp] = useState([]);
-    
+    const {userData,setUserData} = useContext(UserContext);
     useEffect(()=>{
-        let data = JSON.parse(window.localStorage.getItem(`userInfo`));
+        // let data = JSON.parse(window.localStorage.getItem(`userInfo`));
+        let data = userData;
         setTemp(data);
         let islike = data.liked.find((val)=>val._id===elem._id);
         if(islike===undefined || islike === null)
@@ -27,7 +28,7 @@ const UserCard = ({elem , socket}) => {
             console.log(type);
             const data = await getUser();
             console.log(data.data);
-            window.localStorage.setItem("userInfo",JSON.stringify(data.data));    
+            setUserData(data.data);   
         });
 
     },[socket]);
@@ -39,8 +40,11 @@ const UserCard = ({elem , socket}) => {
         const editLike = async(obj)=>{
             try {
                 // console.log("temp:",obj.likedby,"elem:",obj.liked);
+                
                 const data = await updateLike(obj);
-                window.localStorage.setItem("userInfo" , JSON.stringify(data.data));
+                // window.localStorage.setItem("userInfo" , JSON.stringify(data.data));
+                setUserData(data.data); 
+                  
                 
             } catch (error) {
                 console.log("It's an error!")
@@ -58,11 +62,12 @@ const UserCard = ({elem , socket}) => {
                     duration: 5000,
                     isClosable: true,
                   })
+        editLike({"likedby":temp?._id , "liked":elem?._id});
+        window.localStorage.setItem(`${elem?._id}`,JSON.stringify(true));
+        setLike(true);
         setTimeout(()=>{
-            editLike({"likedby":temp?._id , "liked":elem?._id});
-                window.localStorage.setItem(`${elem?._id}`,JSON.stringify(true));
-                setLike(true);
-                const data = JSON.parse(window.localStorage.getItem("userInfo"));        
+                // const data = JSON.parse(window.localStorage.getItem("userInfo"));
+                const data = userData;        
                 socket.emit("sendNotification" , {sender: data, receiver:elem, type: "liked"});
         },2000)
     }
@@ -73,28 +78,25 @@ const UserCard = ({elem , socket}) => {
             try {
                 const data = await updateDislike(obj);
                 
-                window.localStorage.setItem("userInfo" , JSON.stringify(data.data));
-               
+                // window.localStorage.setItem("userInfo" , JSON.stringify(data.data));
+                setUserData(data.data);   
+
             } catch (error) {
                 console.log("It's an error!")
             }
         }
         
+        editDislike({"dislikedby":temp._id , "disliked":elem._id});
+        window.localStorage.setItem(`${elem?._id}`,JSON.stringify(false));
+        setLike(false);
         setTimeout(()=>{
-            editDislike({"dislikedby":temp._id , "disliked":elem._id});
-            window.localStorage.setItem(`${elem?._id}`,JSON.stringify(false));
-            setLike(false);
-            const data = JSON.parse(window.localStorage.getItem("userInfo"));        
+            // const data = JSON.parse(window.localStorage.getItem("userInfo"));        
+            const data = userData;
             socket.emit("sendNotification" , {sender: data, receiver:elem, type: "disliked"});
         },2000)
     }
 
 
-    
-    // useEffect(()=>{
-    //     socket.on("getnotification",({sender,receiver})=>{
-    //     })
-    // },[socket])
   
     return (
         

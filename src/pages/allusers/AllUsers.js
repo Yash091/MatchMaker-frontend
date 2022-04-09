@@ -1,27 +1,33 @@
-import {React , useState , useEffect} from 'react'
+import {React , useState , useEffect,useContext} from 'react'
 import UserCard from '../../components/users/UserCard'
 import { getAllUser } from '../../service/api'
 import { Link } from 'react-router-dom';
 import "./AllUsers.css"
 import { Spinner } from '@chakra-ui/react'
-
+import { UserContext } from '../../context/Context';
 // import { useLocation } from 'react-router-dom';
 
 const AllUsers = ({socket}) => {
 
     const [isloading , setIsLoading] = useState(true);
     const [users , setUsers] = useState([]);
-    // const {user} = useContext(UserContext);
+    const {userData} = useContext(UserContext);
 
     useEffect(() => {
         setIsLoading(true);
         
         const allUsers = async () => {
-            const peep = JSON.parse(window.localStorage.getItem('userInfo'));
+            try {
+                // const peep = JSON.parse(window.localStorage.getItem('userInfo'));
             // console.log(peep);
+            const peep = userData;
+            console.log(peep);
             const data = await getAllUser(peep?._id);
             setUsers(data.data);
             setIsLoading(false);
+            } catch (error) {
+                console.log("error in fetching all users",error);
+            }
         }
         allUsers();
     }, [])
@@ -63,7 +69,7 @@ const AllUsers = ({socket}) => {
                     :
                     users?.map( (elem) => {
                     return( 
-                        <UserCard elem={elem} socket={socket}/>
+                        <UserCard elem={elem} socket={socket} key={elem._id}/>
                     )
                 })
             }    

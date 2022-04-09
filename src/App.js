@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect,useState } from "react";
+import { useEffect,useState,useContext } from "react";
 import { Route } from "react-router-dom";
 import { io } from "socket.io-client";
 import Register from "./pages/authentication/register/Register";
@@ -16,21 +16,23 @@ import LikedByCards from "./pages/likecards/LikedByCards";
 import Matches from "./pages/matches/Matches";
 import MatchesCard from "./components/matches-card/MatchesCard";
 import { ChakraProvider } from '@chakra-ui/react'
+import {UserContext} from "./context/Context"
 function App() {
 
   const [socket , setSocket] = useState(null);
-  const data = JSON.parse(window.localStorage.getItem("userInfo"));
-  console.log(data);
+  // const data = JSON.parse(window.localStorage.getItem("userInfo"));
+  const {userData} = useContext(UserContext);
+  
   useEffect(() => {  
     if(socket === null) {  
       setSocket(io("http://localhost:8000"));
     }
     if(socket) {
-      if(data)
-      socket.emit("setup",{sender:data});
+      if(userData)
+      socket.emit("setup",{sender:userData});
     }
-  },[socket]);
- 
+  },[socket,userData]);
+
   return (
     <>
      

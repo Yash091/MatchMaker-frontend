@@ -121,7 +121,7 @@ const Profile = () => {
                 <TabPanel>
                   {!likedby[0] ? "You have not been likedby anyone" : <MatchesCard elem={user.likedby[0]}/>}
                   {likedby[1] ? <MatchesCard elem={user.likedby[1]}/> : ""}
-                  {likedby[2] ? <Link to="/like"> View More </Link> : ""}
+                  {likedby[2] ? <Link to="/likedby"> View More </Link> : ""}
                 </TabPanel>
               </TabPanels>
             </Tabs>

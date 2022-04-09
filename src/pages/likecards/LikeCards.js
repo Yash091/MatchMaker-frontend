@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import LikeCard from '../../components/likecard/LikeCard'
-// import { UserContext } from '../../context/Context'
+import { UserContext } from '../../context/Context'
 import { Spinner } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import "./LikeCards.css"
 
 const LikeCards = () => {
     
-    // const {user , setUser} = useContext(UserContext);
+    const {userData } = useContext(UserContext);
     const [allLike , setAllLike] = useState([]);
     const [isLoading , setIsLoading] = useState(false);
-    const [user,setUser] = useState();
+    // const [user,setUser] = useState();
     useEffect(()=>{
-        const data = JSON.parse(window.localStorage.getItem("userInfo"));
+        const data = userData;
+        setIsLoading(false);
         setAllLike(data.liked)
-        setTimeout(() => {
-            setIsLoading(true);
-        }, 1000);
-    },[])
+        // setTimeout(() => {
+        //     setIsLoading(true);
+        // }, 1000);
+        setIsLoading(true);
+    },[userData]);
     
     return (
 
