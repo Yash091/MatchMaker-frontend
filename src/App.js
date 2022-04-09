@@ -22,20 +22,15 @@ function App() {
   const data = JSON.parse(window.localStorage.getItem("userInfo"));
   console.log(data);
   useEffect(() => {  
-    if(socket === null)
-    {
-      
+    if(socket === null) {  
       setSocket(io("http://localhost:8000"));
     }
-
-    if(socket)
-    {
-      
+    if(socket) {
+      if(data)
       socket.emit("setup",{sender:data});
     }
   },[socket]);
  
-  
   return (
     <>
      

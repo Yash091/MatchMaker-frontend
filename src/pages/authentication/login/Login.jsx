@@ -11,7 +11,7 @@ const Login = ({socket}) => {
     e.preventDefault();
     const obj = { email: email, password: password };
     const data = await logUser(obj);
-    
+    console.log(data.data.user);
     if (data.status === 200) {
       window.localStorage.setItem("userInfo", JSON.stringify(data.data.user));
       socket?.emit("setup",{sender: data.data.user});

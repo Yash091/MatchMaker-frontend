@@ -1,14 +1,13 @@
 import {React , useEffect , useState} from 'react'
 import { Link } from 'react-router-dom'
 import "./UserCard.css"
-import { updateLike , updateDislike } from '../../service/api'
+import { updateLike , updateDislike, getUser } from '../../service/api'
 import { useToast } from '@chakra-ui/react'
 import sound from "./drop-sound.mp3";
 
 const UserCard = ({elem , socket}) => {
     const toast = useToast();
     const [like , setLike] = useState(false);
-    
     const [temp,setTemp] = useState([]);
     
     useEffect(()=>{
@@ -21,12 +20,19 @@ const UserCard = ({elem , socket}) => {
             islike = true;
         setLike(islike);
     },[])
+
     useEffect(()=>{
-        socket.on("getNotification" , (sender) => {
-            console.log(sender);
-          })
-    },[socket])
-   
+        
+        socket.on("getNotification" , async({sender , type}) => {
+            console.log(type);
+            const data = await getUser();
+            console.log(data.data);
+            window.localStorage.setItem("userInfo",JSON.stringify(data.data));    
+        });
+
+    },[socket]);
+    
+
     
     const handleLike = (elem) => {
         // // socket.volatile.emit("liked",user._id,elem._id)
@@ -40,7 +46,6 @@ const UserCard = ({elem , socket}) => {
                 console.log("It's an error!")
             }
         }
-        editLike({"likedby":temp?._id , "liked":elem?._id});
         var birdSound = new Audio(sound);
                 birdSound.loop = false;
                 birdSound.play();
@@ -53,13 +58,13 @@ const UserCard = ({elem , socket}) => {
                     duration: 5000,
                     isClosable: true,
                   })
-
-            
+        setTimeout(()=>{
+            editLike({"likedby":temp?._id , "liked":elem?._id});
                 window.localStorage.setItem(`${elem?._id}`,JSON.stringify(true));
                 setLike(true);
-        const data = JSON.parse(window.localStorage.getItem("userInfo"));        
-        socket.emit("sendNotification" , {sender: data, receiver:elem});
-        
+                const data = JSON.parse(window.localStorage.getItem("userInfo"));        
+                socket.emit("sendNotification" , {sender: data, receiver:elem, type: "liked"});
+        },2000)
     }
     
     const handleDislike = (elem) => {
@@ -74,10 +79,14 @@ const UserCard = ({elem , socket}) => {
                 console.log("It's an error!")
             }
         }
-        editDislike({"dislikedby":temp._id , "disliked":elem._id});
         
-        window.localStorage.setItem(`${elem?._id}`,JSON.stringify(false));
-        setLike(false);
+        setTimeout(()=>{
+            editDislike({"dislikedby":temp._id , "disliked":elem._id});
+            window.localStorage.setItem(`${elem?._id}`,JSON.stringify(false));
+            setLike(false);
+            const data = JSON.parse(window.localStorage.getItem("userInfo"));        
+            socket.emit("sendNotification" , {sender: data, receiver:elem, type: "disliked"});
+        },2000)
     }
 
 
