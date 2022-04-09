@@ -1,8 +1,8 @@
 import React from 'react'
-import { useState, useEffect  } from "react";
+import { useState, useEffect, useContext  } from "react";
 import { useParams ,useHistory} from 'react-router';
 import { getDetail } from '../../service/api';
-
+import { UserContext } from '../../context/Context';
 import { updateLike , updateDislike } from '../../service/api';
 
 function DetailView() {
@@ -23,61 +23,29 @@ function DetailView() {
   const {id} = useParams();
 
   const [like, setLike] = useState(false);
-  // const {user , setUser} = useContext(UserContext);
-    const [user,setUser] = useState();
-  const [userdata, setUserdata] = useState(initial);
+  const {userData , setUserData} = useContext(UserContext);
+    // const [user,setUser] = useState();
+  const [user, setUser] = useState(initial);
   const history = useHistory();
 
   useEffect(() => {
     const getData = async (id) => {
-      // console.log(id);
       const data = await getDetail(id);
     //   if (!data.data._id) history.push("/");
-      setUserdata(data.data);
+      setUser(data.data);
     };
     getData(id);
-    setUser(JSON.parse(window.localStorage.getItem("userInfo")));
+    
   }, []);
-
-  const handleLike = () => {
-    // socket.volatile.emit("liked",user._id,elem._id)
-    const editLike = async (obj) => {
-      try {
-        const data = await updateLike(obj);
-        // console.log(data);
-        window.localStorage.setItem("userInfo", JSON.stringify(data.data));
-      } catch (error) {
-        console.log("It's an error!")
-      }
-    }
-    editLike({
-      "likedby": user._id,
-      "liked": id
-    });
-  }
-
-  const handleDislike = () => {
-    // socket.volatile.emit("liked",user._id,elem._id)
-    const editDislike = async (obj) => {
-      try {
-        const data = await updateDislike(obj);
-        // console.log(data);
-        window.localStorage.setItem("userInfo", JSON.stringify(data.data));
-      } catch (error) {
-        console.log("It's an error!")
-      }
-    }
-    editDislike({
-      "dislikedby": user._id,
-      "disliked": id
-    });
-  }
+  const handleDislike=()=>{};
+  const handleLike=()=>{};
+  
 
   return (
     <div>
         <section style={{ backgroundColor: "#eee" }}>
       
-      <div className="container py-5">
+      <div className="container py-3">
         <div className="row">
           <div className="col">
           </div>
@@ -88,12 +56,12 @@ function DetailView() {
             <div className="card mb-4">
               <div className="card-body text-center">
                 <img
-                  src={userdata.picture}
+                  src={user.picture}
                   alt="avatar"
                   className="rounded-circle img-fluid"
                   style={{ width: "250px" }}
                 />
-                <h5 className="my-3">{userdata.name}</h5>
+                <h5 className="my-3">{user.name}</h5>
               
                 <div className={`init-heart ${like === false ? "" : "hidden"}`} ><i className="fa fa-heart-o" onClick={()=>{setLike(!like); handleLike()}}></i></div> 
                 <div className={`heart ${like === false ? "hidden" : ""}`} ><i className="fa fa-solid fa-heart" onClick={()=>{setLike(!like); handleDislike()}}></i></div>
@@ -147,7 +115,7 @@ function DetailView() {
                     <p className="mb-0">Full Name</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{userdata.name}</p>
+                    <p className="text-muted mb-0">{user.name}</p>
                   </div>
                 </div>
                 <hr />
@@ -156,7 +124,7 @@ function DetailView() {
                     <p className="mb-0">Email</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{userdata.email}</p>
+                    <p className="text-muted mb-0">{user.email}</p>
                   </div>
                 </div>
                 <hr />
@@ -165,7 +133,7 @@ function DetailView() {
                     <p className="mb-0">Mobile</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{userdata.mobile}</p>
+                    <p className="text-muted mb-0">{user.mobile}</p>
                   </div>
                 </div>
                 <hr />
@@ -174,7 +142,7 @@ function DetailView() {
                     <p className="mb-0">Date of Birth</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{userdata.dob}</p>
+                    <p className="text-muted mb-0">{user.dob}</p>
                   </div>
                 </div>
                 <hr />
@@ -183,7 +151,7 @@ function DetailView() {
                     <p className="mb-0">Address</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{userdata.address}</p>
+                    <p className="text-muted mb-0">{user.address}</p>
                   </div>
                 </div>
                 <hr />
@@ -192,7 +160,7 @@ function DetailView() {
                     <p className="mb-0">Gender</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{userdata.gender}</p>
+                    <p className="text-muted mb-0">{user.gender}</p>
                   </div>
                 </div>
                 <hr />
@@ -201,7 +169,7 @@ function DetailView() {
                     <p className="mb-0">Religion</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{userdata.religion}</p>
+                    <p className="text-muted mb-0">{user.religion}</p>
                   </div>
                 </div>
                 <hr />
@@ -210,7 +178,7 @@ function DetailView() {
                     <p className="mb-0">Mother Tongue</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{userdata.mothertongue}</p>
+                    <p className="text-muted mb-0">{user.mothertongue}</p>
                   </div>
                 </div>
                 <hr />
@@ -219,7 +187,7 @@ function DetailView() {
                     <p className="mb-0">Description</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{userdata.description}</p>
+                    <p className="text-muted mb-0">{user.description}</p>
                   </div>
                 </div>
               </div>

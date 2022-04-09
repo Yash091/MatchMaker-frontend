@@ -3,11 +3,14 @@ import { Link, useHistory } from "react-router-dom";
 import { logUser } from "../../../service/api"
 import "./Login.css";
 import { UserContext } from "../../../context/Context";
+
 const Login = ({socket}) => {
+
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const {setUserData} = useContext(UserContext);
   const history = useHistory();
+
   const userLog = async (e) => {
     e.preventDefault();
     const obj = { email: email, password: password };

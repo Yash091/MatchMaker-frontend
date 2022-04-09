@@ -17,12 +17,14 @@ import Matches from "./pages/matches/Matches";
 import MatchesCard from "./components/matches-card/MatchesCard";
 import { ChakraProvider } from '@chakra-ui/react'
 import {UserContext} from "./context/Context"
+import {getUser} from "./service/api"
+
 function App() {
 
   const [socket , setSocket] = useState(null);
   // const data = JSON.parse(window.localStorage.getItem("userInfo"));
-  const {userData} = useContext(UserContext);
-  
+  const {userData,setUserData} = useContext(UserContext);
+  // const [notification,setNotification] = useState(0);
   useEffect(() => {  
     if(socket === null) {  
       setSocket(io("http://localhost:8000"));
@@ -30,6 +32,13 @@ function App() {
     if(socket) {
       if(userData)
       socket.emit("setup",{sender:userData});
+      socket.on("getNotification" , async({sender , type}) => {
+        console.log(type);
+        const data = await getUser();
+        console.log(data.data);
+        setUserData(data.data);   
+        
+    });
     }
   },[socket,userData]);
 
@@ -37,21 +46,19 @@ function App() {
     <>
      
     <ChakraProvider>
+      <Navbar socket={socket}/>
       <Route exact path="/userprofile">
-      <Navbar/>
-        <Profile />
+        <Profile socket={socket} />
       </Route>
       <Route path="/update/:id">
-      <Navbar/>
         <Update />
       </Route>
       <Route exact path="/">
-      <Navbar/>
+      
         <AllUsers socket={socket}/>
       </Route>
       <Route path="/detailview/:id">
-      <Navbar/>
-        <DetailView/>
+              <DetailView/>
       </Route>
       <Route path="/signup">
         <Signup />
@@ -63,15 +70,15 @@ function App() {
         <Register />
       </Route>
       <Route path="/like">
-      <Navbar/>
+      
         <LikeCards/>
       </Route>
       <Route path="/likedby">
-      <Navbar/>
+      
         <LikedByCards/>
       </Route>
       <Route path="/matches">
-      <Navbar/>
+      
         <Matches/>
       </Route>
       <Route path ="/matchcard">

@@ -70,6 +70,10 @@ a .login-span {
   padding: auto;
 }
 
+.bell-small-screen {
+  display: none !important;
+}
+
 @media screen and (max-width: 900px) {
   .navbar {
     display: block;
@@ -117,6 +121,14 @@ a .login-span {
     padding-top: 0rem;
     border-radius: 8px;
     padding: auto;
+  }
+
+  .bell-large-screen {
+    display: none !important;
+  }
+
+  .bell-small-screen {
+    display: inline-block !important;
   }
 }
 

@@ -25,13 +25,14 @@ const initial = {
   picture: "",
 };
 
-const Profile = () => {
+const Profile = ({socket}) => {
 
   // const {user} = useContext(UserContext);
   const history = useHistory();
   const [liked,setLiked] = useState([]);
   const [likedby,setLikedby] = useState([]);
   const [user,setUser] = useState(initial);
+
   useEffect(()=>{
       const like = JSON.parse(window.localStorage.getItem("userInfo"));
       setLiked(like.liked);

@@ -33,7 +33,7 @@ const LikeCards = () => {
                 size = 'xl' 
             /> : (allLike !== null ? (allLike.length > 0 ? allLike.map(elem => {
                     return (
-                        <LikeCard elem={elem} dislike={"1"}/>
+                        <LikeCard elem={elem}/>
                     )
             }): "Hey you Brat, First like someone and then come here"): "Hey you Brat, First like someone and then come here")
         }
