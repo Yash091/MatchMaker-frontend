@@ -1,4 +1,4 @@
-import { useState,useContext } from "react";
+import { useState,useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { logUser } from "../../../service/api"
 import "./Login.css";
@@ -8,9 +8,13 @@ const Login = ({socket}) => {
 
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
-  const {setUserData} = useContext(UserContext);
+  const {userData,setUserData} = useContext(UserContext);
   const history = useHistory();
 
+    useEffect(()=>{
+      if(userData)
+          history.replace("/");
+    },[])
   const userLog = async (e) => {
     e.preventDefault();
     const obj = { email: email, password: password };
@@ -20,7 +24,9 @@ const Login = ({socket}) => {
       window.localStorage.setItem("userInfo", JSON.stringify(data.data.user));
       setUserData(data.data.user);
       socket?.emit("setup",{sender: data.data.user});
-      history.push("/");
+      // console.log(history);
+
+      history.replace("/");
     }
     else window.alert("Invalid Credentials!");
   };

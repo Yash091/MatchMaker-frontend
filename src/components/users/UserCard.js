@@ -6,32 +6,37 @@ import { useToast } from '@chakra-ui/react'
 import sound from "./drop-sound.mp3";
 import { UserContext } from '../../context/Context'
 const UserCard = ({elem , socket}) => {
+    
     const toast = useToast();
     const [like , setLike] = useState(false);
     const [temp,setTemp] = useState([]);
     const {userData,setUserData} = useContext(UserContext);
+
     useEffect(()=>{
         // let data = JSON.parse(window.localStorage.getItem(`userInfo`));
         let data = userData;
         setTemp(data);
         let islike = data.liked.find((val)=>val._id===elem._id);
         if(islike===undefined || islike === null)
-            islike = false;
+        islike = false;
         else    
-            islike = true;
+        islike = true;
         setLike(islike);
+        window.localStorage.setItem(`${elem._id}`,JSON.stringify(islike));
     },[])
 
-    useEffect(()=>{
-        
-        socket.on("getNotification" , async({sender , type}) => {
-            console.log(type);
-            const data = await getUser();
-            console.log(data.data);
-            setUserData(data.data);   
-        });
 
-    },[socket]);
+
+    // useEffect(()=>{
+        
+    //     socket.on("getNotification" , async({sender , type}) => {
+    //         console.log(type);
+    //         const data = await getUser();
+    //         console.log(data.data);
+    //         setUserData(data.data);   
+    //     });
+
+    // },[socket]);
     
 
     
@@ -119,6 +124,7 @@ const UserCard = ({elem , socket}) => {
                 <div className='age'>D.O.B : {elem.dob}</div>
                 <div className='religion'>Religion : {elem.religion}</div>
                 <div className='age'>Mother Tongue : {elem.mothertongue}</div>
+                <hr/>
                 <div className="description"> {elem.description} </div>
             </div>
             <div className="button">

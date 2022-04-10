@@ -27,7 +27,7 @@ function App() {
   // const [notification,setNotification] = useState(0);
   useEffect(() => {  
     if(socket === null) {  
-      setSocket(io("http://localhost:8000"));
+        setSocket(io("http://localhost:8000"));
     }
     if(socket) {
       if(userData)
@@ -46,19 +46,22 @@ function App() {
     <>
      
     <ChakraProvider>
-      <Navbar socket={socket}/>
+      
       <Route exact path="/userprofile">
+      <Navbar socket={socket}/>
         <Profile socket={socket} />
       </Route>
       <Route path="/update/:id">
+        <Navbar socket={socket}/>
         <Update />
       </Route>
       <Route exact path="/">
-      
+        <Navbar socket={socket}/>
         <AllUsers socket={socket}/>
       </Route>
       <Route path="/detailview/:id">
-              <DetailView/>
+        <Navbar socket={socket}/>
+        <DetailView socket={socket}/>
       </Route>
       <Route path="/signup">
         <Signup />
@@ -70,15 +73,15 @@ function App() {
         <Register />
       </Route>
       <Route path="/like">
-      
+        <Navbar socket={socket}/>
         <LikeCards/>
       </Route>
       <Route path="/likedby">
-      
+        <Navbar socket={socket}/>
         <LikedByCards/>
       </Route>
       <Route path="/matches">
-      
+        <Navbar socket={socket}/>
         <Matches/>
       </Route>
       <Route path ="/matchcard">

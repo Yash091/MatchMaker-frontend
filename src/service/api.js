@@ -82,9 +82,37 @@ export const updateLike = async(obj) => {
   }
 }
 
-export const updateDislike = async(obj) => {
+export const updateDislike = async (obj) => {
   try {
     const data = await axios.post(`${url}/updatedislike` , obj , {withCredentials: true,});
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const removeNotif = async (obj , id) => {
+  try {
+    const obj1 = {obj , id};
+    const data = await axios.post(`${url}/removenotification` , obj1 , {withCredentials: true});
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const clearNotification = async (obj) => {
+  try {
+    const data = await axios.post(`${url}/clearnotification` , obj , {withCredentials: true});
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const logout = async () => {
+  try {
+    const data = await axios.get(`${url}/logout` , {withCredentials:true});
     return data;
   } catch (error) {
     return error;

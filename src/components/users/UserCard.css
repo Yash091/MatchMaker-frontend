@@ -73,6 +73,12 @@
 .user-card-container .info .desc{
     font-size: 1.2rem;
 }
+.user-card-container .info .desc .description{
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: rgb(72, 14, 87);
+}
+
 .user-card-container .info .button button{
     background: #0070FF;
     border-radius: 5rem;
@@ -129,6 +135,7 @@
     margin-left: 1rem;
 
 }
+
 .user-card-container .name-proff .name .heart{
     display: inline-block;
     margin-left: 1rem;
