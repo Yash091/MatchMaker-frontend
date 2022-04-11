@@ -3,7 +3,7 @@ import { useState, useEffect, useContext  } from "react";
 import { useParams ,useHistory} from 'react-router';
 import { getDetail } from '../../service/api';
 import { UserContext } from '../../context/Context';
-import { updateLike , updateDislike } from '../../service/api';
+import { updateLike , updateDislike , accessChat } from '../../service/api';
 import "./DetailView.css"
 import { useToast } from '@chakra-ui/react'
 import sound from "../../components/users/drop-sound.mp3"
@@ -38,6 +38,16 @@ function DetailView({socket}) {
       setUser(data.data);
     };
     getData(id);
+    const chatTest = async () => {
+      try {
+        const test = await accessChat({id: id});
+        console.log(test);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    chatTest();
+  
 
   }, []);
 
@@ -117,6 +127,7 @@ function DetailView({socket}) {
   
   // setIsLiked(user.)
 
+ 
   return (
     <div>
         <section style={{ backgroundColor: "#eee" }}className="detail-container">

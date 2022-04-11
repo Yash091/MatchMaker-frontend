@@ -1,0 +1,73 @@
+.home-container{
+    /* background: url("./home-pic.png"); */
+    background: url("../../../image/home-pic.png");
+    /* width: 100%; */
+    min-height:80vh;
+    height:inherit;
+    background-position:left center; 
+    background-size:contain , cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+}
+
+.home-content{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.home-content .welcome-text{
+    font-size: 2.6rem;
+    color: #222121;
+}
+
+.home-content .web-name{    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 3.7rem;
+    line-height: 4rem;
+    color: #EA0A84;
+}
+
+.home-content .brief{
+    margin-top: 3rem;
+    width: 25rem;
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+    color: #504E4E;
+
+}
+
+.home-content .register-btn {
+    /* font-size: 2rem !important; */
+    /* width: 20rem !important; */
+    /* height: 100px !important; */
+    margin-top: 2rem !important;
+}
+
+.home-content .log-link{
+    margin-top: 1rem;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.home-content span{
+    color: #EA0A84;
+}
+
+@media screen and (max-width:700) {
+    .home-container {
+        background: white !important;
+    }
+}

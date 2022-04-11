@@ -98,15 +98,15 @@ const Profile = ({ socket }) => {
                 <h5 className="my-3"> {user.name} </h5>{" "}
                 {/* <p className="text-muted mb-1">Full Stack Developer</p>
                         <p className="text-muted mb-4">Bay Area, San Francisco, CA</p> */}{" "}
-                <div className="d-flex justify-content-center mb-2">
+                <div className="d-flex justify-content-center mb-2 btns">
                   <Link to={`/update/${user._id}`}>
-                    <button type="button" className="btn btn-primary">
+                    <button type="button" className="btn  edit-btn">
                       Edit Profile{" "}
                     </button>{" "}
                   </Link>{" "}
                   <button
                     type="button"
-                    className="btn btn-outline-primary ms-1"
+                    className="btn  ms-1 delete-btn"
                     onClick={handleDelete}
                   >
                     Delete Profile{" "}

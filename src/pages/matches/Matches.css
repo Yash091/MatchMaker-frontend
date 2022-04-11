@@ -3,6 +3,7 @@
     flex-direction: row;
     /* align-items: center; */
     justify-content: space-evenly;
+    min-height: 80vh;
 }
 
 .matches-chat-container .matches-container {
@@ -10,7 +11,7 @@
     flex-direction: column;
     width: 30%;
     border: 2px solid black;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     /* margin: 1rem; */
 }
 
@@ -31,8 +32,9 @@
 }
 
 .matches-chat-container .chat .info{
-    background-color: rgb(223, 223, 223);
-    padding: 1rem;
+    display: grid ;
+    /* grid-template-rows: 1fr 3fr 1fr; */
+    height:inherit;
 }
 
 .matches-chat-container .chat .info .avatar-info{
@@ -41,6 +43,8 @@
     width: 100%;
     align-items: flex-start;
     justify-content: flex-start;
+    background-color: rgb(223, 223, 223);
+    padding: 1rem;
 }
 
 .matches-chat-container .chat .info .avatar-info .name{
@@ -48,7 +52,76 @@
     text-align: center;
     font-size: 3rem;
 }
+
 .matches-chat-container .chat .texting{
-    min-height: 68vh;
-    overflow-y: scroll;
+    /* height: 100%; */
+    height:59vh;
+    /* overflow-y: scroll; */
 }
+
+.chat-class{
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-end;
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+
+.sender{
+    padding: 0.8rem;
+    /* display: flex; */
+    width: max-content;
+    max-width: 200px;
+    background-color: rgb(170, 244, 74);
+    height: min-content;
+    /* border-radius: 20px; */
+    margin: 0.6rem;
+    /* padding: 10px; */
+    border: none;
+    /* border: 2px solid red; */
+    /* padding: 10px; */
+    border-radius: 15px 15px 0 15px;
+    /* position: relative;
+    left: 90%; */
+}
+
+.receiver{
+    /* width: 100%; */
+    /* display: flex; */
+    padding: 0.9rem;
+    width: max-content;
+    max-width: 200px;
+    background-color: rgb(239, 102, 180);
+    height: min-content;
+    /* border-radius: 20px; */
+    margin: 0.6rem;
+    align-self: baseline;
+  
+    border-radius: 15px 15px 15px 0;
+    /* float: left; */
+}
+
+.drawer-select{
+    display: flex;
+    flex-direction: row;
+}
+
+.side-drawer {
+    display: none;
+}
+
+
+@media screen and (max-width: 600px) {
+    .matches-container {
+        display: none !important;
+    }
+    .matches {
+        display: none;
+    }
+    .chat{
+        width: 100%;
+    }
+    .side-drawer {
+        display: block;
+    }
+} 

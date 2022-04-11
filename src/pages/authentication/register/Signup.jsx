@@ -6,6 +6,7 @@ import blank from "./blank.png"
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { createUser, uploadFile } from "../../../service/api";
+import { Input , VStack , HStack } from '@chakra-ui/react'
 
 function Signup() {
   const initial = {
@@ -68,7 +69,36 @@ function Signup() {
       <img className="couple-img" src = {couple} />
     </div>
 
+
     <div className = "register-fields">
+      <HStack>
+      <div className="first">
+        <VStack spacing={3}>
+          Name
+          <Input variant='outline' placeholder='Outline' />
+          Mobile No.
+          <Input variant='outline' placeholder='Outline' />
+          Gender
+          <Input variant='outline' placeholder='asdsad' />
+          Profession
+          <Input variant='outline' placeholder='Outline' />
+          Mother Tongue
+          <Input variant='outline' placeholder='Outline' />
+          Password
+          <Input variant='outline' placeholder='Outline' />
+        </VStack>
+      </div>
+      <div className="second">
+        <VStack spacing={3}>
+          <Input variant='outline' placeholder='Outline' />
+          <Input variant='outline' placeholder='Outline' />
+          <Input variant='outline' placeholder='Outline' />
+          <Input variant='outline' placeholder='Outline' />
+          <Input variant='outline' placeholder='Outline' />
+          <Input variant='outline' placeholder='Outline' />
+        </VStack>
+      </div>
+      </HStack>
       <h2 className="reg-heading">Register</h2>
       <div className = "form-and-img">
         <form className = "sign-up-form">

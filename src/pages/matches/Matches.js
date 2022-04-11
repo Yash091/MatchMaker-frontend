@@ -1,57 +1,185 @@
-import React, {  useContext, useEffect, useState } from 'react'
-import { Avatar } from '@chakra-ui/react'
-import "./Matches.css"
-import { UserContext } from '../../context/Context'
-import MatchesCard from '../../components/matches-card/MatchesCard'
-import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import React, { useContext, useEffect, useState } from "react";
+import { Avatar } from "@chakra-ui/react";
+import "./Matches.css";
+import { UserContext } from "../../context/Context";
+import MatchesCard from "../../components/matches-card/MatchesCard";
+import { Skeleton } from "@chakra-ui/react";
+import { accessChat, allMessages, sendMessage } from "../../service/api.js";
+import ChatComponent from "./ChatComponent";
+import { Input } from "@chakra-ui/react";
+import Drawer from "./Drawer";
 
-const Matches = () => {
-
-  // const {user} = useContext(UserContext);
+const Matches = ({ socket, selectedChatCompare }) => {
   const [matchArray, setMatchArray] = useState([]);
-  const [loading ,setLoading] = useState(true);
-  const {userData} = useContext(UserContext);
-  useEffect(()=>{
-    
-    // const user = JSON.parse(window.localStorage.getItem("userInfo"));
-    // const arr = user?.liked?.filter((elem) => ( elem._id ===  );
-    const arr = userData?.liked?.filter(like => userData?.likedby?.find(liked => liked._id === like._id));
-    // console.log(arr);
+  const [loading, setLoading] = useState(true);
+  const {
+    userData,
+    selectedChat,
+    setSelectedChat,
+    chats,
+    setChats,
+    messages,
+    setMessages,
+    arrivalMessage
+  } = useContext(UserContext);
+
+  const [mssg, setMssg] = useState("");
+  // const [selectedChatCompare, setSelectedChatCompare] = useState();
+
+  useEffect(() => {
+    const arr = userData?.liked?.filter((like) =>
+      userData?.likedby?.find((liked) => liked._id === like._id)
+    );
+
     setMatchArray(arr);
-  },[userData])
+  }, [userData]);
+  useEffect(()=>{
+    arrivalMessage && selectedChat?.users.includes(arrivalMessage.sender) && setMessages((prev)=>[...prev,arrivalMessage])
+  },[arrivalMessage,selectedChat]);
+  // useEffect(() => {
+  //   if (!socket) return;
+  //   socket.on("new message", (content) => {
+  //     if (
+  //       !selectedChatCompare ||
+  //       selectedChatCompare._id !== content.chat._id
+  //     ) {
+  //       //notification
+
+  //       console.log("helo");
+  //     } else {
+  //       console.log(content);
+  //       setMessages([...messages, content]);
+  //     }
+  //   });
+  // });
+
+  useEffect(() => {
+    if (!selectedChat) {
+      console.log("select a chat");
+      return;
+    }
+    try {
+      const getMessages = async (id) => {
+        const { data } = await allMessages(id);
+        setMessages(data);
+      };
+      getMessages(selectedChat._id);
+      selectedChatCompare = selectedChat;
+      console.log(selectedChat);
+      // setSelectedChatCompare(selectedChat);
+      // eslint-disable-next-line
+    } catch (error) {
+      console.log(error);
+    }
+  }, [selectedChat]);
+
+  const handleChat = async (elem) => {
+    const data = await accessChat({ id: elem._id });
+
+    if (!chats?.find((ch) => ch?._id === data?.data?._id))
+      setChats([data.data, ...chats]);
+
+    setSelectedChat(data.data);
+  };
+
+  const sendMssg = async (e) => {
+    if (e.key === "Enter" && mssg) {
+      const obj = {
+        content: mssg,
+        chatId: selectedChat._id,
+      };
+      setMssg("");
+
+      const { data } = await sendMessage(obj);
+      console.log(data, "from message");
+
+      const id =
+        selectedChat.users[0]._id === userData._id
+          ? selectedChat.users[1]._id
+          : selectedChat.users[0]._id;
+      socket.emit("send message", { content: data, id: id });
+      setMessages([...messages, data]);
+    }
+  };
 
   return (
-    <div className='matches-chat-container'>
-        <div className='matches-container'>
-          <div className="matches">
-            <div className='heading'>My Matches</div>
-            <div className="search">
-              
-            </div>
-            {
-                matchArray ? matchArray?.map(elem => {
-                  return <MatchesCard elem={elem}/>
-              }): < Skeleton height = '20px' />
-            }
-          </div>
+    <div className="matches-chat-container">
+      <div className="matches-container">
+        <div className="matches">
+          <div className="heading">My Matches</div>
+          <div className="search"></div>
+          {matchArray ? (
+            matchArray?.map((elem) => {
+              return (
+                <div
+                  onClick={() => handleChat(elem)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <MatchesCard elem={elem} />
+                </div>
+              );
+            })
+          ) : (
+            <Skeleton height="20px" />
+          )}
         </div>
-        <div className="chat">
-          <div className="info">
-            <div className="avatar-info">
-              <Avatar
-                size = 'xl'
-                name = 'Kola Tioluwani'
-                src = 'https://bit.ly/tioluwani-kolawole'
-              />
-              <div className="name">Name</div>
+      </div>
+      <div className="chat">
+        {/* <div className='side-drawer'><Drawer matchArray={matchArray} /></div> */}
+        {!selectedChat ? (
+          <div className="drawer-select">
+            <div className="side-drawer">
+              <Drawer matchArray={matchArray} />
             </div>
+            <h1>Select a chat to start conversation</h1>
           </div>
-            <div className="texting">
-                No text
+        ) : (
+          <>
+            <div className="info">
+              <div className="avatar-info">
+                <div className="side-drawer">
+                  <Drawer matchArray={matchArray} />
+                </div>
+                <Avatar
+                  size="xl"
+                  name={
+                    selectedChat.users[0]._id !== userData._id
+                      ? `${selectedChat.users[0].name}`
+                      : `${selectedChat.users[1].name}`
+                  }
+                  src={
+                    selectedChat.users[0]._id !== userData._id
+                      ? `${selectedChat.users[0].picture}`
+                      : `${selectedChat.users[1].picture}`
+                  }
+                />
+                <div className="name">
+                  {selectedChat.users[0]._id !== userData._id
+                    ? `${selectedChat.users[0].name}`
+                    : `${selectedChat.users[1].name}`}
+                </div>
+              </div>
+              <div className="texting">
+                <ChatComponent messages={messages} />
+                <div
+                  className="input"
+                  style={{ position: "relative", bottom: "0" }}
+                ></div>
+              </div>
+              <div onKeyDown={(e) => sendMssg(e)}>
+                <Input
+                  id="message"
+                  placeholder="Write a message"
+                  onChange={(e) => setMssg(e.target.value)}
+                  value={mssg}
+                />
+              </div>
             </div>
-        </div>
+          </>
+        )}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Matches
+export default Matches;

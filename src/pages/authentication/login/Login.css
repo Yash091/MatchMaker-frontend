@@ -1,4 +1,4 @@
-.log-container {
+/* .log-container {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
@@ -79,4 +79,17 @@
 }
 .label {
   margin-top: 20px;
+} */
+.log-container{
+  background:url("./log-pic.jpeg");
+    min-height:100vh;
+    height:inherit;
+    background-position:right ; 
+    background-size:cover ;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
 }

@@ -1,6 +1,9 @@
 import axios from "axios";
 const url = "http://localhost:8000";
 
+///////////////////////////////////////////////////////////////////////
+///////////////*****User Apis*****////////////////////////////
+
 export const uploadFile = async (post) => {
   try {
     return await axios.post(`${url}/file/upload`, post);
@@ -113,6 +116,37 @@ export const clearNotification = async (obj) => {
 export const logout = async () => {
   try {
     const data = await axios.get(`${url}/logout` , {withCredentials:true});
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+//////////////////*********Chat APis********////////////////////////////////////
+
+
+export const accessChat = async (id)=>{
+  try {
+    const data = await axios.post(`${url}/accesschat`,id,{withCredentials:true});
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const allMessages = async (id) => {
+  try {
+    const data = await axios.get(`${url}/allmessages/${id}` , id , {withCredentials: true});
+    return data;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const sendMessage = async (obj) => {
+  try {
+    const data = await axios.post(`${url}/sendmessage`,obj,{withCredentials:true});
     return data;
   } catch (error) {
     return error;

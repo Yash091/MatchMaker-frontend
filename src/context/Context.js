@@ -6,7 +6,11 @@ export const UserContext = createContext();
 
 const Context = ({children}) => {
     const initial = JSON.parse(window.localStorage.getItem("userInfo"));
-    const [userData,setUserData] = useState(initial);
+    const [userData,setUserData] = useState(initial); 
+    const [selectedChat, setSelectedChat] = useState(null);
+    const [chats , setChats] = useState([]);
+    const [messages,setMessages] = useState([]);
+    const [arrivalMessage,setArrivalMessage] = useState(null);
     const history = useHistory();
     useEffect(()=>{
         
@@ -20,9 +24,10 @@ const Context = ({children}) => {
         if(userData!=={} || userData!==null || userData!== undefined)
           window.localStorage.setItem("userInfo",JSON.stringify(userData));
      },[userData]);
+
   return (
-    <UserContext.Provider value ={{userData,setUserData}}>{children}</UserContext.Provider>
+    <UserContext.Provider value ={{userData,setUserData,selectedChat,setSelectedChat,chats,setChats,messages,setMessages,arrivalMessage,setArrivalMessage}}>{children}</UserContext.Provider>
   )
 }
 
-export default Context
+export default Context;

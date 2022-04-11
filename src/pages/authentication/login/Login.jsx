@@ -33,7 +33,7 @@ const Login = ({socket}) => {
 
   return (
     <>
-      <div className="log-container">
+      {/* <div className="log-container">
         <div className="log-cont1">
           <Link to="/register">
             <button>Sign Up</button>
@@ -73,6 +73,9 @@ const Login = ({socket}) => {
             </form>
           </div>
         </div>
+      </div> */}
+      <div className="log-container">
+          <div></div>
       </div>
     </>
   );

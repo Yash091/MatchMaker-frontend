@@ -30,14 +30,13 @@ const Navbar = ({ socket }) => {
   useEffect(() => {
     if (socket) {
       socket.on("getNotification", async ({ sender, type }) => {
-        console.log(type);
+        // console.log(type);
         const data = await getUser();
-        console.log(data.data);
+        // console.log(data.data);
         setUserData(data.data);
-        // setNotification((prev) => prev + 1);
       });
     }
-  }, [socket]);
+  });
 
   useEffect(() => {
     if(!userData)
@@ -58,7 +57,7 @@ const Navbar = ({ socket }) => {
   const handleRead = async (notif , id) => {
     const notification = notif;
     const data = await removeNotif(notif , id);
-    console.log(data);
+    // console.log(data);
     setUserData(data.data);
     history.push(`/detailview/${notification._id}`);
     window.location.reload(true);
@@ -68,12 +67,11 @@ const Navbar = ({ socket }) => {
   const handleClearNotification = async () => {
     const data = await clearNotification({id: userData._id});
     setUserData(data.data);
-    // console.log(data);
   } 
 
   //logout functionality
   const handleLogout = async () => {
-    console.log("clicked")
+    // console.log("clicked")
     const data = await logout();
     window.localStorage.clear();
     setUserData(null);
@@ -182,7 +180,7 @@ const Navbar = ({ socket }) => {
             </Menu>{" "}
             <span
               style={{
-                background: "cyan",
+                background: "#EA0A84",
                 padding: "5px",
                 position: "relative",
                 right: "20px",
@@ -192,6 +190,7 @@ const Navbar = ({ socket }) => {
                 width: "40px",
                 textAlign: "center",
                 fontWeight: "bold",
+                color: "white",
               }}
             >
               {notlen}
@@ -210,7 +209,7 @@ const Navbar = ({ socket }) => {
               className="fa fa-bars"
               style={{
                 fontSize: "3rem",
-                color: "#49516f",
+                color: "#EA0A84;",
               }}
             ></i>{" "}
           </div>{" "}
@@ -346,7 +345,7 @@ const Navbar = ({ socket }) => {
                 </Menu>{" "}
                 <span
                   style={{
-                    background: "cyan",
+                    background: "#EA0A84",
                     padding: "5px",
                     position: "relative",
                     right: "20px",
@@ -355,7 +354,8 @@ const Navbar = ({ socket }) => {
                     fontSize: "15px",
                     width: "40px",
                     textAlign: "center",
-                    fontWeight: "bold",
+                    fontWeight: "500",
+                    color: "white",
                   }}
                 >
                   {notlen}
@@ -370,7 +370,7 @@ const Navbar = ({ socket }) => {
                 ) : (
                   <>
                     <Menu maxW="15px">
-                      <MenuButton >
+                      <MenuButton>
                         <Avatar
                           size="md"
                           name={userData.name}
@@ -386,7 +386,9 @@ const Navbar = ({ socket }) => {
                         <MenuItem maxW="inherit">
                           <Link to="/matches">Your Matches</Link>
                         </MenuItem>
-                        <MenuItem maxW="inherit" onClick={() => (handleLogout())}>Logout</MenuItem>
+                        <MenuItem maxW="inherit" onClick={() => handleLogout()}>
+                          Logout
+                        </MenuItem>
                       </MenuList>
                     </Menu>
                     {/* <Link to="/login" onCLick={() => handleLogout()}>
