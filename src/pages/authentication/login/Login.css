@@ -81,15 +81,92 @@
   margin-top: 20px;
 } */
 .log-container{
-  background:url("./log-pic.jpeg");
-    min-height:100vh;
-    height:inherit;
-    background-position:right ; 
-    background-size:cover ;
+  background:url("./log-pic.png");
+    /* min-height:100vh; */
+    height:80vh;
+    background-position:right center; 
+    background-size:contain;
     background-repeat: no-repeat;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content:space-around;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
+    color: #504E4E;
+    
+}
+
+.log-container .log-content{
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  /* justify-content:flex-start;
+  align-items:flex-start;
+  position: relative;
+  left: -100px; */
+}
+.log-container .log-text{
+  font-size: 2rem;
+}
+.log-container .wel-text{
+  color : #EA0A84;
+  font-size: 3.2rem;
+  
+}
+.log-container .input-area{
+  margin-top: 3rem;
+}
+.log-container .input-label{
+  margin-top: 1rem;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 2.3rem;
+}
+.log-container .log-img{
+  visibility: hidden;
+  width: 0;
+}
+.log-container input{
+  border: 1px solid #504E4E;
+  box-sizing: border-box;
+  border-radius: 7px;
+  width: 20rem;
+  height: 2rem;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.log-container .log-btn{
+  margin-top: 2rem;
+  background: #EA0A84;
+  opacity: 0.9;
+  border-radius: 10px;
+  width: 9rem;
+  height: 3rem;
+  color: white;
+}
+.log-container button:hover{
+  margin-top: 2rem;
+  background: white;
+  opacity: 0.9;
+  border-radius: 10px;
+  width: 9rem;
+  height: 3rem;
+  color: #EA0A84;
+  font-weight: 600;
+  border: 2px solid #EA0A84;
+}
+@media screen and (max-width:700px) {
+  .log-container {
+      background:none;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      
+  }
+  .log-container .log-img{
+    visibility: visible;
+    width: 100%;
+  }
+  
+
 }

@@ -1,81 +1,58 @@
-import { useState,useContext, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { logUser } from "../../../service/api"
+import { logUser } from "../../../service/api";
 import "./Login.css";
 import { UserContext } from "../../../context/Context";
-
-const Login = ({socket}) => {
-
+import logPic from "./log-pic.png"
+const Login = ({ socket }) => {
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
-  const {userData,setUserData} = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   const history = useHistory();
 
-    useEffect(()=>{
-      if(userData)
-          history.replace("/");
-    },[])
+  // useEffect(() => {
+  //   if (userData) history.replace("/");
+  // }, []);
   const userLog = async (e) => {
     e.preventDefault();
     const obj = { email: email, password: password };
     const data = await logUser(obj);
-    // console.log(data.data.user);
+    
     if (data.status === 200) {
       window.localStorage.setItem("userInfo", JSON.stringify(data.data.user));
       setUserData(data.data.user);
-      socket?.emit("setup",{sender: data.data.user});
-      // console.log(history);
+      socket?.emit("setup", { sender: data.data.user });
+      
 
       history.replace("/");
-    }
-    else window.alert("Invalid Credentials!");
+    } else window.alert("Invalid Credentials!");
   };
 
   return (
     <>
-      {/* <div className="log-container">
-        <div className="log-cont1">
-          <Link to="/register">
-            <button>Sign Up</button>
-          </Link>
-        </div>
-        <div className="log-cont2">
-          <div className="log-head"> Sign In</div>
-          <div log-form>
-            <form>
-              <div className="label">
-                <label htmlFor="email">Email</label>
-              </div>
-              <div>
-                <input
-                  type="email"
+      
+      <div className="log-container">
+        
+        <div className="log-content">
+          <div>
+            <div className="log-text">Login to</div>
+            <div className="wel-text">Match Maker</div>
+            <div className="input-area">
+            <div className="input-label">Email</div>
+            <input type="email"
                   name="email"
                   id="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="label">
-                <label htmlFor="password">Password</label>
-              </div>
-              <div>
-                <input
-                  type="password"
+                  onChange={(e) => setEmail(e.target.value)}/>
+            <div className="input-label">Password</div>
+            <input type="password"
                   name="password"
                   id="password"
-                  onChange={(e) => setPass(e.target.value)}
-                />
-              </div>
-              <div>
-                <button type="submit" onClick={(e) => userLog(e)}>
-                  Sign in
-                </button>
-              </div>
-            </form>
+                  onChange={(e) => setPass(e.target.value)}/>
+            </div>
+            <button className="log-btn" onClick={(e) => userLog(e)}>Log In</button>
           </div>
         </div>
-      </div> */}
-      <div className="log-container">
-          <div></div>
+        <div className="log-img"><img src = {logPic} alt = "login-pic"/></div>
       </div>
     </>
   );

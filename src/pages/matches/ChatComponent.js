@@ -6,7 +6,8 @@ import ScrollableFeed from 'react-scrollable-feed'
 import "./Matches.css"
 
 const ChatComponent = ({messages}) => {
-    const {userData} = useContext(UserContext)
+    const {userData} = useContext(UserContext);
+    console.log(messages ,"from messages");
     return (
         <>
             <ScrollableFeed style={{height: "5rem"}}>

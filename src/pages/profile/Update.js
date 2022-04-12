@@ -90,7 +90,7 @@ function Update() {
                 {/* <p className="text-muted mb-1">Full Stack Developer</p>
             <p className="text-muted mb-4">Bay Area, San Francisco, CA</p> */}
                 <div className="d-flex justify-content-center mb-2">
-                  <button type="button" className="btn btn-primary" onClick={(e) => saveChanges(e)}>
+                  <button type="button" className="btn save-btn" onClick={(e) => saveChanges(e)}>
                     Save Changes
                   </button>
                   

@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState, useContext } from "react";
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import { io } from "socket.io-client";
 import Register from "./pages/authentication/register/Register";
 import Login from "./pages/authentication/login/Login";
@@ -24,7 +24,7 @@ function App() {
   let selectedChatCompare;
   const [socket, setSocket] = useState(null);
   // const data = JSON.parse(window.localStorage.getItem("userInfo"));
-  const { userData, setUserData, selectedChat, setMessages, messages,setArrivalMessage } =
+  const { userData, setUserData, selectedChat, setMessages, messages,setArrivalMessage ,setNotObj} =
     useContext(UserContext);
   // const [notification,setNotification] = useState(0);
   useEffect(() => {
@@ -44,8 +44,19 @@ function App() {
 
   useEffect(() => {
     if (!socket) return;
-    socket.on("new message", (content) => {
-      // console.log(content);
+    socket.on("new message", ({content,sender}) => {
+      // console.log(content,"arrivalmeassage");
+      console.log(selectedChat,"selectedChat")
+      const rId = userData._id;
+      const obj = {
+        senderName : sender.name,
+        senderId : sender.id,
+        receiverId : rId,
+        picture : sender.picture,
+      }
+      console.log(obj,"obj");
+      // if(obj.senderName)
+        setNotObj(obj);
       setArrivalMessage(content);
     });
   });
@@ -53,46 +64,54 @@ function App() {
   return (
     <>
       <ChakraProvider>
-        <Route exact path="/">
           <Navbar socket={socket}/>
+        <Route exact path="/">
             <Home/>
         </Route>
-        <Route exact path="/userprofile">
-          <Navbar socket={socket} />
-          <Profile socket={socket} />
+        <Route  path="/userprofile">
+          {/* <Navbar scoket={socket}/> */}
+          {!userData ? <Redirect to = "/"/>: 
+          <Profile socket={socket} /> }
+         
         </Route>
         <Route path="/update/:id">
-          <Navbar socket={socket} />
+          {/* <Navbar socket={socket} /> */}
           <Update />
         </Route>
         <Route path="/allusers">
-          <Navbar socket={socket} />
-          <AllUsers socket={socket} />
+          {/* <Navbar socket={socket} /> */}
+          {!userData ? <Redirect to = "/"/>: 
+          <AllUsers socket={socket} /> }
+          
         </Route>
         <Route path="/detailview/:id">
-          <Navbar socket={socket} />
+          {/* <Navbar socket={socket} /> */}
           <DetailView socket={socket} />
         </Route>
         <Route path="/signup">
-          <Signup />
+          {userData ? <Redirect to = "/"/>:<Signup /> }
+          {/* <Signup /> */}
         </Route>
         <Route path="/login">
-          <Login socket={socket} />
+        {userData ? <Redirect to = "/"/>:<Login socket={socket} /> }
+          
         </Route>
         <Route path="/register">
-          <Register />
+        {userData ? <Redirect to = "/"/>:<Register />}
+          
         </Route>
         <Route path="/like">
-          <Navbar socket={socket} />
+          {/* <Navbar socket={socket} /> */}
           <LikeCards />
         </Route>
         <Route path="/likedby">
-          <Navbar socket={socket} />
+          {/* <Navbar socket={socket} /> */}
           <LikedByCards />
         </Route>
         <Route path="/matches">
-          <Navbar socket={socket} />
-          <Matches socket={socket} selectedChatCompare={selectedChatCompare} />
+          {/* <Navbar socket={socket} /> */}
+          {!userData ? <Redirect to = "/"/>:<Matches socket={socket} selectedChatCompare={selectedChatCompare} />}
+          
         </Route>
         <Route path="/matchcard">
           <MatchesCard />

@@ -1,10 +1,10 @@
 .home-container{
     /* background: url("./home-pic.png"); */
-    background: url("../../../image/home-pic.png");
+    background: url("../../image/home-pic.png");
     /* width: 100%; */
-    min-height:80vh;
-    height:inherit;
-    background-position:left center; 
+    
+    height:80vh;
+    background-position: 25% ; 
     background-size:contain , cover;
     background-repeat: no-repeat;
     display: flex;
@@ -12,14 +12,15 @@
     justify-content: space-around;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
+    margin-top: -3rem;
 }
 
 .home-content{
-    margin-top: 2rem;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     align-items: center;
+    width:36vw;
 }
 
 .home-content .welcome-text{
@@ -38,12 +39,11 @@
 
 .home-content .brief{
     margin-top: 3rem;
-    width: 25rem;
+    /* width: 30vw; */
     font-weight: 400;
     font-size: 1.5rem;
     line-height: 1.8rem;
     color: #504E4E;
-
 }
 
 .home-content .register-btn {
@@ -66,8 +66,63 @@
     color: #EA0A84;
 }
 
-@media screen and (max-width:700) {
+.small-screen-bg {
+    visibility:hidden;
+    width:0px;
+    /* display:none; */
+}
+
+@media screen and (max-width:700px) {
+
     .home-container {
-        background: white !important;
+        margin-top: 1rem;
+        background:none;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-evenly;
+        overflow-y: scroll;
+    }
+
+    .small-screen-bg {
+        display:block !important;
+        width: 100%;
+        visibility: visible;
+    }
+ 
+    .home-content {
+        /* padding: 1rem; */
+        width: 100%;
+        margin:0;
+    }   
+
+    .home-content .welcome-text {
+        font-size: 1.6rem;
+        color: #222121;
+    }
+
+    .home-content .web-name {    
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 2.4rem;
+        line-height: 2rem;
+        color: #EA0A84;
+    }
+
+    .home-content .brief{
+        margin-top: 1.5rem;
+        margin-left: 0.5rem;
+        width: 60vw;
+        font-weight: 400;
+        font-size: 0.9rem;
+        line-height: 1.2rem;
+        color: #504E4E;
+    }
+
+    .home-content .register-btn {
+        margin-top: 1rem !important;
+        height: 2rem !important;
+        width: inherit
     }
 }

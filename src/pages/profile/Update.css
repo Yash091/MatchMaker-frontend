@@ -12,7 +12,14 @@
   row-gap: 0.9rem;
   overflow-y: scroll;
 }
-
+.save-btn{
+  background-color: #EA0A84;
+  color:white
+}
+.save-btn:hover{
+  background-color:white;
+  color: #EA0A84;
+}
 .update-container .detail-body input{
     width: 100%;
 }

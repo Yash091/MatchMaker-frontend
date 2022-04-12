@@ -2,6 +2,7 @@ import React from 'react'
 import { Avatar ,Wrap, WrapItem} from '@chakra-ui/react'
 import { useBreakpointValue } from '@chakra-ui/media-query';
 import "./MatchesCard.css"
+
 const MatchesCard = ({elem}) => {
     const AvatarSize = useBreakpointValue({ base: 'sm', md: 'md' })
     // console.log(elem);

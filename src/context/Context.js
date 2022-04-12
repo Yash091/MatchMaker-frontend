@@ -11,12 +11,13 @@ const Context = ({children}) => {
     const [chats , setChats] = useState([]);
     const [messages,setMessages] = useState([]);
     const [arrivalMessage,setArrivalMessage] = useState(null);
+    const [notObj,setNotObj] = useState();
     const history = useHistory();
     useEffect(()=>{
         
         const data = JSON.parse(window.localStorage.getItem("userInfo"));
         if(!data)
-            history.push("/login");
+            history.push("/");
         else
         setUserData(data);
     },[history]);
@@ -26,7 +27,7 @@ const Context = ({children}) => {
      },[userData]);
 
   return (
-    <UserContext.Provider value ={{userData,setUserData,selectedChat,setSelectedChat,chats,setChats,messages,setMessages,arrivalMessage,setArrivalMessage}}>{children}</UserContext.Provider>
+    <UserContext.Provider value ={{userData,setUserData,selectedChat,setSelectedChat,chats,setChats,messages,setMessages,arrivalMessage,setArrivalMessage,notObj,setNotObj}}>{children}</UserContext.Provider>
   )
 }
 

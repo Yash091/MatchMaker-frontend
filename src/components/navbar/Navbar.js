@@ -27,20 +27,20 @@ const Navbar = ({ socket }) => {
   const [notification, setNotification] = useState(0);
   const [notlen, setNotlen] = useState(0);
 
-  useEffect(() => {
-    if (socket) {
-      socket.on("getNotification", async ({ sender, type }) => {
-        // console.log(type);
-        const data = await getUser();
-        // console.log(data.data);
-        setUserData(data.data);
-      });
-    }
-  });
+  // useEffect(() => {
+  //   if (socket) {
+  //     socket.on("getNotification", async ({ sender, type }) => {
+  //       // console.log(type);
+  //       const data = await getUser();
+  //       // console.log(data.data);
+  //       setUserData(data.data);
+  //     });
+  //   }
+  // });
 
   useEffect(() => {
     if(!userData)
-      history.replace("/login");
+      history.replace("/");
     else
     setNotlen(userData.notifications.length);
   }, [userData]);
@@ -49,8 +49,7 @@ const Navbar = ({ socket }) => {
   const verticalNav = (e) => {
     const nav = document.querySelector(".nav-links-horizontal");
     nav.classList.toggle("responsive");
-    // const temp = document.querySelector("#nav-link2");
-    // temp.classList.toggle("open");
+   
   };
 
   //Reading Notifications
@@ -82,7 +81,7 @@ const Navbar = ({ socket }) => {
     <div>
       <header>
         <div className="navbar">
-          <li className="bell-small-screen">
+         {!userData?"": <li className="bell-small-screen">
             <Menu isLazy closeOnSelect matchWidth>
               <MenuButton>
                 <BellIcon w={8} h={8} />{" "}
@@ -195,7 +194,7 @@ const Navbar = ({ socket }) => {
             >
               {notlen}
             </span>
-          </li>
+          </li>}
           <div
             className="icon"
             onClick={(e) => {
@@ -241,7 +240,7 @@ const Navbar = ({ socket }) => {
                   <span className="contactUs"> Contact Us </span>{" "}
                 </Link>{" "}
               </li>{" "}
-              <li className="bell-large-screen">
+              {!userData?"":<li className="bell-large-screen">
                 {" "}
                 {/* <NotificationsNoneIcon
                               className="bell-small-screen"
@@ -360,7 +359,7 @@ const Navbar = ({ socket }) => {
                 >
                   {notlen}
                 </span>
-              </li>{" "}
+              </li>}
               <li>
                 {" "}
                 {!userData ? (

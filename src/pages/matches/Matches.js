@@ -4,7 +4,7 @@ import "./Matches.css";
 import { UserContext } from "../../context/Context";
 import MatchesCard from "../../components/matches-card/MatchesCard";
 import { Skeleton } from "@chakra-ui/react";
-import { accessChat, allMessages, sendMessage } from "../../service/api.js";
+import { accessChat, allMessages, saveNotification, sendMessage } from "../../service/api.js";
 import ChatComponent from "./ChatComponent";
 import { Input } from "@chakra-ui/react";
 import Drawer from "./Drawer";
@@ -20,7 +20,8 @@ const Matches = ({ socket, selectedChatCompare }) => {
     setChats,
     messages,
     setMessages,
-    arrivalMessage
+    arrivalMessage,
+    notObj
   } = useContext(UserContext);
 
   const [mssg, setMssg] = useState("");
@@ -34,7 +35,20 @@ const Matches = ({ socket, selectedChatCompare }) => {
     setMatchArray(arr);
   }, [userData]);
   useEffect(()=>{
-    arrivalMessage && selectedChat?.users.includes(arrivalMessage.sender) && setMessages((prev)=>[...prev,arrivalMessage])
+    // console.log("Hey man!")
+   if(arrivalMessage)
+   {
+      if(selectedChat.users[0]._id === arrivalMessage.sender._id || selectedChat.users[1]._id === arrivalMessage.sender._id)
+        setMessages((prev)=>[...prev,arrivalMessage]);
+      else{
+        const saveNot = async()=>{
+          console.log(notObj,"before")
+          const {data} = await saveNotification(notObj);
+          console.log(data);
+        }
+        saveNot();
+      }
+   }
   },[arrivalMessage,selectedChat]);
   // useEffect(() => {
   //   if (!socket) return;
@@ -89,7 +103,12 @@ const Matches = ({ socket, selectedChatCompare }) => {
         chatId: selectedChat._id,
       };
       setMssg("");
+      const obj1={
+        id:userData._id,
+        name : userData.name,
+        picture:userData.picture
 
+      }
       const { data } = await sendMessage(obj);
       console.log(data, "from message");
 
@@ -97,7 +116,7 @@ const Matches = ({ socket, selectedChatCompare }) => {
         selectedChat.users[0]._id === userData._id
           ? selectedChat.users[1]._id
           : selectedChat.users[0]._id;
-      socket.emit("send message", { content: data, id: id });
+      socket.emit("send message", { content: data, id: id , sender:obj1});
       setMessages([...messages, data]);
     }
   };
@@ -131,7 +150,7 @@ const Matches = ({ socket, selectedChatCompare }) => {
             <div className="side-drawer">
               <Drawer matchArray={matchArray} />
             </div>
-            <h1>Select a chat to start conversation</h1>
+           <div className="select-head"> Select a chat to start conversation </div>
           </div>
         ) : (
           <>
