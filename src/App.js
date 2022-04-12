@@ -29,7 +29,7 @@ function App() {
   // const [notification,setNotification] = useState(0);
   useEffect(() => {
     if (socket === null) {
-      setSocket(io("http://localhost:8000"));
+      setSocket(io("https://matchmakerserver.herokuapp.com"));
     }
     if (socket) {
       if (userData) socket.emit("setup", { sender: userData });
