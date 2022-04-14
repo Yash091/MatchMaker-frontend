@@ -5,6 +5,8 @@ import { updateLike , updateDislike, getUser } from '../../service/api'
 import { useToast } from '@chakra-ui/react'
 import sound from "./drop-sound.mp3";
 import { UserContext } from '../../context/Context'
+import { Image , Box } from '@chakra-ui/react'
+
 const UserCard = ({elem , socket}) => {
     
     const toast = useToast();
@@ -41,6 +43,18 @@ const UserCard = ({elem , socket}) => {
 
     
     const handleLike = (elem) => {
+      var birdSound = new Audio(sound);
+                birdSound.loop = false;
+                birdSound.play();
+
+                //Toast
+                toast({
+                    title: "You liked",
+                    description: `You have liked ${elem?.name}`,
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                  })
         // // socket.volatile.emit("liked",user._id,elem._id)
         const editLike = async(obj)=>{
             try {
@@ -55,18 +69,7 @@ const UserCard = ({elem , socket}) => {
                 console.log("It's an error!")
             }
         }
-        var birdSound = new Audio(sound);
-                birdSound.loop = false;
-                birdSound.play();
-
-                //Toast
-                toast({
-                    title: "You liked",
-                    description: `You have liked ${elem?.name}`,
-                    status: 'success',
-                    duration: 5000,
-                    isClosable: true,
-                  })
+        
         editLike({"likedby":temp?._id , "liked":elem?._id});
         window.localStorage.setItem(`${elem?._id}`,JSON.stringify(true));
         setLike(true);
@@ -104,35 +107,51 @@ const UserCard = ({elem , socket}) => {
 
   
     return (
-        
-    <div className="user-card-container">
+      <div className="user-card-container">
         <div className="profile-pic">
             <img src={elem.picture}/>
+        </div>          
+        <div className="info">
+          <div className="name-proff">
+            <div className="name" style={{ display: "inline-block" }}>
+              {elem.name}
+              <div className={`init-heart ${like === false ? "" : "hidden"}`}>
+                <i
+                  className="fa fa-heart-o"
+                  onClick={() => {
+                    setLike(true);
+                    handleLike(elem);
+                  }}
+                ></i>
+              </div>
+
+              <div className={`heart ${like === false ? "hidden" : ""}`}>
+                <i
+                  className="fa fa-solid fa-heart"
+                  onClick={() => {
+                    setLike(false);
+                    handleDislike(elem);
+                  }}
+                ></i>
+              </div>
+            </div>
+            <div className="proff">{elem.profession}</div>
+          </div>
+          <div className="desc">
+            <div className="age">D.O.B : {elem.dob}</div>
+            <div className="religion">Religion : {elem.religion}</div>
+            <div className="age">Mother Tongue : {elem.mothertongue}</div>
+            <hr />
+            <div className="description"> {elem.description} </div>
+          </div>
+          <div className="button">
+            <Link to={`/detailview/${elem._id}`}>
+              <button className="view-profile">View Profile</button>
+            </Link>
+          </div>
         </div>
-        <div className='info'>
-            <div className='name-proff'>
-                <div className = 'name'
-                style={{display: "inline-block"}}>
-                    {elem.name}
-                <div className={`init-heart ${like === false ? "" : "hidden"}`} ><i className="fa fa-heart-o" onClick={() => {setLike(true); handleLike(elem)}}></i></div>
-                   
-                <div className={`heart ${like === false ? "hidden" : ""}`} ><i className="fa fa-solid fa-heart" onClick={() => {setLike(false); handleDislike(elem)}}></i></div>
-                </div>
-                <div className='proff'>{elem.profession}</div>
-            </div>
-            <div className="desc">
-                <div className='age'>D.O.B : {elem.dob}</div>
-                <div className='religion'>Religion : {elem.religion}</div>
-                <div className='age'>Mother Tongue : {elem.mothertongue}</div>
-                <hr/>
-                <div className="description"> {elem.description} </div>
-            </div>
-            <div className="button">
-                <Link to={`/detailview/${elem._id}`}><button className='view-profile'>View Profile</button></Link>    
-            </div>
-        </div>
-    </div>
-  )
+      </div>
+    );
 }
 
 export default UserCard

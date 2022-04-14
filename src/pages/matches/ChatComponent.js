@@ -7,7 +7,7 @@ import "./Matches.css"
 
 const ChatComponent = ({messages}) => {
     const {userData} = useContext(UserContext);
-    console.log(messages ,"from messages");
+    // console.log(messages ,"from messages");
     return (
         <>
             <ScrollableFeed style={{height: "5rem"}}>

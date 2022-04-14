@@ -41,7 +41,7 @@ function DetailView({socket}) {
     const chatTest = async () => {
       try {
         const test = await accessChat({id: id});
-        console.log(test);
+        // console.log(test);
       } catch (error) {
         console.log(error);
       }

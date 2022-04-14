@@ -39,14 +39,14 @@ const SideDrawer = ({matchArray}) => {
           {/* <Radio value="left">Left</Radio> */}
         </Stack>
       </RadioGroup>
-      <Button colorScheme="blue" onClick={onOpen}>
+      <Button colorScheme="green" onClick={onOpen}>
         <ArrowBackIcon />
       </Button>
       <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader borderBottomWidth="1px">
-            <Button colorScheme="blue" onClick={onClose}>
+            <Button colorScheme="green" onClick={onClose} m={"2"}>
               <ArrowBackIcon />
             </Button>
             My Matches

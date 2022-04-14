@@ -1,5 +1,5 @@
 import axios from "axios";
-const url = "https://matchmakerserver.herokuapp.com";
+const url = "http://localhost:8000";
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////*****User Apis*****////////////////////////////
@@ -14,7 +14,7 @@ export const uploadFile = async (post) => {
 
 export const createUser = async (user) => {
   try {
-    return await axios.post(`${url}/register`, user);
+    return await axios.post(`${url}/register`, user,{ withCredentials: true });
   } catch (err) {
     return err;
   }

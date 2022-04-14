@@ -1,8 +1,8 @@
 import React from "react";
 import "./Signup.css";
-import logo from "./logo.png"
-import couple from "./couple.png"
-import blank from "./blank.png"
+import logo from "../../../image/logo.png";
+import couple from "../../../image/couple.png";
+import blank from "../../../image/blank.png";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { createUser, uploadFile } from "../../../service/api";
@@ -76,6 +76,7 @@ const InputFields = () => {
     const [isMobile] = useMediaQuery("(max-width: 768px)") 
   return (
     <>
+        <FormControl>
           <VStack spacing={5} width="50%">
 
               <FormLabel htmlFor="name" >Name</FormLabel>
@@ -118,7 +119,7 @@ const InputFields = () => {
               <Input height="2rem" width="16rem" variant='outline' onChange={(e) => handleChange(e)} name="email" isRequired id="email" placeholder='Email ID' />
 
               <FormLabel htmlFor="dob">Date of Birth</FormLabel>
-              <Input height="2rem" width="16rem" variant='outline' onChange={(e) => handleChange(e)} name="dob" isRequired id='dob' placeholder='Date of Birth' />
+              <Input height="2rem" type="date" width="16rem" variant='outline' onChange={(e) => handleChange(e)} name="dob" isRequired id='dob' placeholder='Date of Birth' />
 
               <FormLabel htmlFor="address">Address</FormLabel>
               <Input height="2rem" width="16rem" variant='outline' onChange={(e) => handleChange(e)} name="address" isRequired id="address" placeholder='Address' />
@@ -132,7 +133,7 @@ const InputFields = () => {
               <FormLabel htmlFor="cpassword">Confirm Password</FormLabel>
               <Input height="2rem" width="16rem" variant='outline' onChange={(e) => handleChange(e)} name="cpassword" isRequired id="cpassword" placeholder='Confirm Password' type="password" />
 
-              {/* <img src={imageURL || blank} /> */}
+              {/* <img src={imageURL || blank} /> */}``
               <Avatar
                   size='md'
                   // name={"name" |}
@@ -146,6 +147,7 @@ const InputFields = () => {
               </label>
               <Input type="file" name="picture" className="imgfile" id="regimg" onChange={(e) => setFile(e.target.files[0])} />
           </VStack>
+        </FormControl>
     </>
   )
 }

@@ -39,9 +39,11 @@ ul {
   align-items: center;
   justify-content: center;
 }
+
 .icon {
   display: none;
 }
+
 .nav-links-horizontal .links-horizontal a {
   list-style-type: none;
   text-decoration: none;
@@ -74,10 +76,20 @@ a .login-span {
   display: none !important;
 }
 
+li{
+  list-style-type:none;
+}
+
+.nav-pic{
+  width: 4rem;
+  margin: 0;
+}
+
 @media screen and (max-width: 900px) {
   .navbar {
-    display: block;
-    width: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    /* width: -webkit-fillavailable; */
   }
   .navbar .logo {
     display: flex;
@@ -90,12 +102,12 @@ a .login-span {
     display: none;
   }
   .responsive {
-    display: block;
+    display: block !important; 
     transition: display ease-in 2s;
   }
 
   .links-horizontal {
-    display: block;
+    display: block !important;
     text-align: center;
   }
   .links-horizontal .login-span {
@@ -128,8 +140,18 @@ a .login-span {
   }
 
   .bell-small-screen {
-    display: inline-block !important;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    /* width: 100%; */
   }
+  .help {
+    width: 100%;
+  }
+  
+ 
 }
 
 .Modal-container {

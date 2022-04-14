@@ -81,7 +81,7 @@
   margin-top: 20px;
 } */
 .log-container{
-  background:url("./log-pic.png");
+  background:url("../../../image/log-pic.png");
     /* min-height:100vh; */
     height:80vh;
     background-position:right center; 
@@ -161,7 +161,7 @@
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      
+      margin-top: 7rem;
   }
   .log-container .log-img{
     visibility: visible;

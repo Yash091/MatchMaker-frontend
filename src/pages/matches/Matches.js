@@ -8,10 +8,14 @@ import { accessChat, allMessages, saveNotification, sendMessage } from "../../se
 import ChatComponent from "./ChatComponent";
 import { Input } from "@chakra-ui/react";
 import Drawer from "./Drawer";
+import SendIcon from "../../image/sendicon.png"
+import { useBreakpointValue } from '@chakra-ui/media-query';
 
 const Matches = ({ socket, selectedChatCompare }) => {
+
+  const AvatarSize = useBreakpointValue({ base: "md", md: "xl" });
   const [matchArray, setMatchArray] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const {
     userData,
     selectedChat,
@@ -25,7 +29,7 @@ const Matches = ({ socket, selectedChatCompare }) => {
   } = useContext(UserContext);
 
   const [mssg, setMssg] = useState("");
-  // const [selectedChatCompare, setSelectedChatCompare] = useState();
+ 
 
   useEffect(() => {
     const arr = userData?.liked?.filter((like) =>
@@ -34,42 +38,29 @@ const Matches = ({ socket, selectedChatCompare }) => {
 
     setMatchArray(arr);
   }, [userData]);
+
+
   useEffect(()=>{
-    // console.log("Hey man!")
+   
    if(arrivalMessage)
    {
       if(selectedChat.users[0]._id === arrivalMessage.sender._id || selectedChat.users[1]._id === arrivalMessage.sender._id)
         setMessages((prev)=>[...prev,arrivalMessage]);
       else{
         const saveNot = async()=>{
-          console.log(notObj,"before")
+          // console.log(notObj,"before")
           const {data} = await saveNotification(notObj);
-          console.log(data);
+          // console.log(data);
         }
         saveNot();
       }
    }
   },[arrivalMessage,selectedChat]);
-  // useEffect(() => {
-  //   if (!socket) return;
-  //   socket.on("new message", (content) => {
-  //     if (
-  //       !selectedChatCompare ||
-  //       selectedChatCompare._id !== content.chat._id
-  //     ) {
-  //       //notification
-
-  //       console.log("helo");
-  //     } else {
-  //       console.log(content);
-  //       setMessages([...messages, content]);
-  //     }
-  //   });
-  // });
+  
 
   useEffect(() => {
     if (!selectedChat) {
-      console.log("select a chat");
+      // console.log("select a chat");
       return;
     }
     try {
@@ -79,9 +70,8 @@ const Matches = ({ socket, selectedChatCompare }) => {
       };
       getMessages(selectedChat._id);
       selectedChatCompare = selectedChat;
-      console.log(selectedChat);
-      // setSelectedChatCompare(selectedChat);
-      // eslint-disable-next-line
+      // console.log(selectedChat);
+      
     } catch (error) {
       console.log(error);
     }
@@ -103,14 +93,39 @@ const Matches = ({ socket, selectedChatCompare }) => {
         chatId: selectedChat._id,
       };
       setMssg("");
-      const obj1={
+      const obj1 = {
         id:userData._id,
         name : userData.name,
         picture:userData.picture
 
       }
       const { data } = await sendMessage(obj);
-      console.log(data, "from message");
+      // console.log(data, "from message");
+
+      const id =
+        selectedChat.users[0]._id === userData._id
+          ? selectedChat.users[1]._id
+          : selectedChat.users[0]._id;
+      socket.emit("send message", { content: data, id: id , sender:obj1});
+      setMessages([...messages, data]);
+    }
+  };
+  
+  const sendMssgBtn = async (e) => {
+    if (mssg) {
+      const obj = {
+        content: mssg,
+        chatId: selectedChat._id,
+      };
+      setMssg("");
+      const obj1 = {
+        id:userData._id,
+        name : userData.name,
+        picture:userData.picture
+
+      }
+      const { data } = await sendMessage(obj);
+      // console.log(data, "from message");
 
       const id =
         selectedChat.users[0]._id === userData._id
@@ -134,7 +149,7 @@ const Matches = ({ socket, selectedChatCompare }) => {
                   onClick={() => handleChat(elem)}
                   style={{ cursor: "pointer" }}
                 >
-                  <MatchesCard elem={elem} />
+                  <MatchesCard elem={elem} key = {elem._id}/>
                 </div>
               );
             })
@@ -144,14 +159,16 @@ const Matches = ({ socket, selectedChatCompare }) => {
         </div>
       </div>
       <div className="chat">
-        {/* <div className='side-drawer'><Drawer matchArray={matchArray} /></div> */}
+        
         {!selectedChat ? (
-          <div className="drawer-select">
-            <div className="side-drawer">
-              <Drawer matchArray={matchArray} />
+          <>
+            <div className="drawer-select">
+              <div className="side-drawer">
+                <Drawer matchArray={matchArray} />
+              </div>
+              <div className="select-head"> Select a chat to start conversation </div>
             </div>
-           <div className="select-head"> Select a chat to start conversation </div>
-          </div>
+          </>
         ) : (
           <>
             <div className="info">
@@ -159,23 +176,26 @@ const Matches = ({ socket, selectedChatCompare }) => {
                 <div className="side-drawer">
                   <Drawer matchArray={matchArray} />
                 </div>
-                <Avatar
-                  size="xl"
-                  name={
-                    selectedChat.users[0]._id !== userData._id
+                <div className="avatar-info">
+                    <Avatar
+                    loading="lazy"
+                    size={AvatarSize}
+                    name={
+                      selectedChat.users[0]._id !== userData._id
+                        ? `${selectedChat.users[0].name}`
+                        : `${selectedChat.users[1].name}`
+                    }
+                    src={
+                      selectedChat.users[0]._id !== userData._id
+                        ? `${selectedChat.users[0].picture}`
+                        : `${selectedChat.users[1].picture}`
+                    }
+                  />
+                  <div className="name">
+                    {selectedChat.users[0]._id !== userData._id
                       ? `${selectedChat.users[0].name}`
-                      : `${selectedChat.users[1].name}`
-                  }
-                  src={
-                    selectedChat.users[0]._id !== userData._id
-                      ? `${selectedChat.users[0].picture}`
-                      : `${selectedChat.users[1].picture}`
-                  }
-                />
-                <div className="name">
-                  {selectedChat.users[0]._id !== userData._id
-                    ? `${selectedChat.users[0].name}`
-                    : `${selectedChat.users[1].name}`}
+                      : `${selectedChat.users[1].name}`}
+                  </div>
                 </div>
               </div>
               <div className="texting">
@@ -185,13 +205,17 @@ const Matches = ({ socket, selectedChatCompare }) => {
                   style={{ position: "relative", bottom: "0" }}
                 ></div>
               </div>
-              <div onKeyDown={(e) => sendMssg(e)}>
+              <div className = "input-class" onKeyDown={(e) => sendMssg(e)}>
                 <Input
                   id="message"
                   placeholder="Write a message"
                   onChange={(e) => setMssg(e.target.value)}
                   value={mssg}
+                  width="80%"
+                  bg={"white"}
+                  style={{outline: "none"}}
                 />
+                <img className="send-pic" src = {SendIcon} alt ="send icon"  onClick={(e)=>sendMssgBtn(e)}/>
               </div>
             </div>
           </>

@@ -1,8 +1,8 @@
 import React from "react";
 import "./Signup.css";
-import logo from "./logo.png"
-import couple from "./couple.png"
-import blank from "./blank.png"
+import logo from "../../../image/logo.png"
+import couple from "../../../image/couple.png"
+import blank from "../../../image/blank.png"
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { createUser, uploadFile } from "../../../service/api";

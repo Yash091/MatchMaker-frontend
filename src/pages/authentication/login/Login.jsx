@@ -3,16 +3,13 @@ import { Link, useHistory } from "react-router-dom";
 import { logUser } from "../../../service/api";
 import "./Login.css";
 import { UserContext } from "../../../context/Context";
-import logPic from "./log-pic.png"
+import logPic from "../../../image/log-pic.png"
 const Login = ({ socket }) => {
   const [email, setEmail] = useState("");
   const [password, setPass] = useState("");
   const { userData, setUserData } = useContext(UserContext);
   const history = useHistory();
 
-  // useEffect(() => {
-  //   if (userData) history.replace("/");
-  // }, []);
   const userLog = async (e) => {
     e.preventDefault();
     const obj = { email: email, password: password };
@@ -37,6 +34,7 @@ const Login = ({ socket }) => {
           <div>
             <div className="log-text">Login to</div>
             <div className="wel-text">Match Maker</div>
+            <form>
             <div className="input-area">
             <div className="input-label">Email</div>
             <input type="email"
@@ -50,6 +48,7 @@ const Login = ({ socket }) => {
                   onChange={(e) => setPass(e.target.value)}/>
             </div>
             <button className="log-btn" onClick={(e) => userLog(e)}>Log In</button>
+            </form>
           </div>
         </div>
         <div className="log-img"><img src = {logPic} alt = "login-pic"/></div>

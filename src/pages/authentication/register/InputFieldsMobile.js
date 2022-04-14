@@ -1,8 +1,8 @@
 import React from "react";
 import "./Signup.css";
-import logo from "./logo.png";
-import couple from "./couple.png";
-import blank from "./blank.png";
+import logo from "../../../image/logo.png";
+import couple from "../../../image/couple.png";
+import blank from "../../../image/blank.png";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { createUser, uploadFile } from "../../../service/api";
@@ -60,11 +60,11 @@ const InputFieldsMobile = () => {
 
     const saveUser = async (e) => {
       e.preventDefault();
-      console.log(user);
+      // console.log(user);
      
       try {
         const data = await createUser(user);
-        console.log(data);
+        // console.log(data);
         if (data.status === 200) {
           if (data.data.message !== "Registration successfull") window.alert(data.data.message);
           else history.push("/login");
@@ -79,6 +79,7 @@ const InputFieldsMobile = () => {
 
     return (
         <>
+          <FormControl>
             <VStack spacing={3} style={{width: "90%"}}>
 
                 <FormLabel htmlFor="name" >Name</FormLabel>
@@ -143,6 +144,7 @@ const InputFieldsMobile = () => {
                     Create Account
                 </Button>
             </VStack>
+          </FormControl>
         </>
     );
 };

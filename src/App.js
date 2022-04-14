@@ -2,7 +2,7 @@ import "./App.css";
 import { useEffect, useState, useContext } from "react";
 import { Redirect, Route } from "react-router-dom";
 import { io } from "socket.io-client";
-import Register from "./pages/authentication/register/Register";
+
 import Login from "./pages/authentication/login/Login";
 import Profile from "./pages/profile/Profile";
 import Signup from "./pages/authentication/register/Signup";
@@ -23,40 +23,38 @@ import Home from "./pages/home/Home";
 function App() {
   let selectedChatCompare;
   const [socket, setSocket] = useState(null);
-  // const data = JSON.parse(window.localStorage.getItem("userInfo"));
+
   const { userData, setUserData, selectedChat, setMessages, messages,setArrivalMessage ,setNotObj} =
     useContext(UserContext);
-  // const [notification,setNotification] = useState(0);
+  
   useEffect(() => {
     if (socket === null) {
-      setSocket(io("https://matchmakerserver.herokuapp.com"));
+      setSocket(io("http://localhost:8000"));
     }
     if (socket) {
       if (userData) socket.emit("setup", { sender: userData });
       socket.on("getNotification", async ({ sender, type }) => {
-        // console.log(type);
         const data = await getUser();
-        // console.log(data.data);
         setUserData(data.data);
       });
     }
-  });
+  },);
 
   useEffect(() => {
     if (!socket) return;
     socket.on("new message", ({content,sender}) => {
       // console.log(content,"arrivalmeassage");
-      console.log(selectedChat,"selectedChat")
-      const rId = userData._id;
-      const obj = {
-        senderName : sender.name,
-        senderId : sender.id,
-        receiverId : rId,
-        picture : sender.picture,
-      }
-      console.log(obj,"obj");
-      // if(obj.senderName)
-        setNotObj(obj);
+      // console.log(selectedChat,"selectedChat")
+      // const rId = userData?._id;
+      // const obj = {
+      //   senderName : sender.name,
+      //   senderId : sender.id,
+      //   receiverId : rId,
+      //   picture : sender.picture,
+      // }
+      // console.log(obj,"obj");
+      // // if(obj.senderName)
+      //   setNotObj(obj);
       setArrivalMessage(content);
     });
   });
@@ -96,10 +94,7 @@ function App() {
         {userData ? <Redirect to = "/"/>:<Login socket={socket} /> }
           
         </Route>
-        <Route path="/register">
-        {userData ? <Redirect to = "/"/>:<Register />}
-          
-        </Route>
+       
         <Route path="/like">
           {/* <Navbar socket={socket} /> */}
           <LikeCards />

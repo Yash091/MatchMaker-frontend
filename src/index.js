@@ -6,7 +6,7 @@ import App from "./App";
 import Context from "./context/Context"
 
 ReactDOM.render(
-  <BrowserRouter >
+  <BrowserRouter>
     <React.StrictMode>
         <Context>
         <App />

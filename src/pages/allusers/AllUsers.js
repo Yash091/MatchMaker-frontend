@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import "./AllUsers.css"
 import { Spinner } from '@chakra-ui/react'
 import { UserContext } from '../../context/Context';
-// import { useLocation } from 'react-router-dom';
+
 
 const AllUsers = ({socket}) => {
 
@@ -18,10 +18,8 @@ const AllUsers = ({socket}) => {
         
         const allUsers = async () => {
             try {
-                // const peep = JSON.parse(window.localStorage.getItem('userInfo'));
-            // console.log(peep);
+            
             const peep = userData;
-            console.log(peep);
             const data = await getAllUser(peep?._id);
             setUsers(data.data);
             setIsLoading(false);
