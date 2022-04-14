@@ -101,6 +101,7 @@ li{
   .nav-links-horizontal {
     display: none;
   }
+
   .responsive {
     display: block !important; 
     transition: display ease-in 2s;
@@ -110,19 +111,23 @@ li{
     display: block !important;
     text-align: center;
   }
+
   .links-horizontal .login-span {
     margin: auto;
   }
+
   .navbar .icon {
     display: block;
     float: right;
   }
+
   .nav-links-horizontal .links-horizontal li {
     margin: 1rem;
     padding-right: 1rem;
     padding-left: 1rem;
     font-size: 1.5rem;
   }
+
   a .login-span {
     background-color: #EA0A84;
     color: #ffffff;
@@ -147,11 +152,10 @@ li{
     margin: 0;
     /* width: 100%; */
   }
+
   .help {
     width: 100%;
   }
-  
- 
 }
 
 .Modal-container {
